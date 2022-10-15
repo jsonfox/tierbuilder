@@ -1,5 +1,5 @@
 import React from "react";
-import { z } from "zod"
+// import { z } from "zod"
 
 export type InputEvent = MouseEvent | TouchEvent | KeyboardEvent;
 export type StateFunc = React.Dispatch<React.SetStateAction<boolean>>;
