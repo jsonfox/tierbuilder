@@ -1,13 +1,13 @@
 import { Draggable } from 'react-beautiful-dnd';
 import className from 'classnames';
 
-interface ItemProps {
+interface Props {
   index: number,
   imageUrl: string,
   key: string
 }
 
-export default function DefaultArea({ index, imageUrl, key }: ItemProps) {
+export default function DefaultArea({ index, imageUrl, key }: Props) {
   return (
     <Draggable draggableId={key} key={key} index={index}>
       {(provided, snapshot) => (

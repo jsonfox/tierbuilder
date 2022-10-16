@@ -1,11 +1,12 @@
-import React from "react";
-import rand from 'randexp'
 import RandExp from "randexp";
+import React from "react";
+import { AppDispatch } from "../redux/store";
 // import { z } from "zod"
 
 export type InputEvent = MouseEvent | TouchEvent | KeyboardEvent;
-export type StateFunc = React.Dispatch<React.SetStateAction<boolean>>;
-export type AnyFunc = (...args: any[]) => any;
+export type StateAction = React.Dispatch<React.SetStateAction<boolean>>;
+export type DispatchAction = (...args: any[]) => AppDispatch
+export type AnyFunction = (...args: any[]) => any;
 export type Ref = React.RefObject<any>;
 export type Nodes = JSX.Element | JSX.Element[];
 export type TbItem = { imageUrl: string, key: string };
