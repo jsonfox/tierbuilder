@@ -12,7 +12,7 @@ export default function ItemContainer({ id, items }: Props) {
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
-          <div className="d-flex flex-wrap">
+          <div className="flex flex-wrap">
             {items.map(({ imageUrl, key }, i) => (
               <Item
                 index={i}

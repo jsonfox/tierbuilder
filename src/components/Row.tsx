@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from '../redux/hooks';
 import { ADD_ROW, CHANGE_ROW_COLOR, CLEAR_ROW, REMOVE_ROW, RENAME_ROW } from '../redux/actions';
 import ContentEditable from 'react-contenteditable';
-import { Row as RowContainer, Stack, Modal, Button } from 'react-bootstrap';
 import ItemContainer from './ItemContainer';
 import { Settings, MoveUp, MoveDown } from './icons'
 import { TbItem, DispatchAction } from '../utils/types';
@@ -27,7 +26,7 @@ export default function Row({ name, color, items, rowIndex, totalRows, moveRow, 
   const clearRow = () => dispatch({ type: CLEAR_ROW, rowIndex })
   
   return (
-    <RowContainer>
+    <div className="flex items-stretch">
       <ContentEditable
         tagName="label"
         html={name}
@@ -35,12 +34,12 @@ export default function Row({ name, color, items, rowIndex, totalRows, moveRow, 
         style={{ backgroundColor: color }}
       />
       <ItemContainer id={rowIndex.toString()} items={items} />
-      <div className="d-flex align-items-center">
+      <div className="flex items-center">
         <Settings size={30} onClick={() => setShowSettings(true)} />
-        <Stack>
+        <div className="flex">
           <MoveUp size={30} onClick={moveRow} aria-label="up" aria-disabled={rowIndex > 0} />
           <MoveDown size={30} onClick={moveRow} aria-label="down" aria-disabled={rowIndex < totalRows - 1} />
-        </Stack>
+        </div>
       </div>
 
       <Modal show={showSettings} onHide={() => setShowSettings(false)}>
@@ -53,6 +52,6 @@ export default function Row({ name, color, items, rowIndex, totalRows, moveRow, 
           {/* TODO: Add buttons and stuff */}
         </Modal.Body>
       </Modal>
-    </RowContainer>
+    </div>
   )
 }
