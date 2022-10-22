@@ -4,12 +4,12 @@ import className from 'classnames';
 interface Props {
   index: number,
   imageUrl: string,
-  key: string
+  itemId: string
 }
 
-export default function DefaultArea({ index, imageUrl, key }: Props) {
+export default function Item({ index, imageUrl, itemId }: Props) {
   return (
-    <Draggable draggableId={key} key={key} index={index}>
+    <Draggable draggableId={itemId} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}

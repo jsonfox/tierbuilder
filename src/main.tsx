@@ -1,9 +1,12 @@
 import ReactDOM from 'react-dom/client';
+import Modal from 'react-modal'
 import { Provider as ReduxProvider } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { Create, Import, Tierbuilder } from './routes';
 import store from './redux/store';
-import './index.scss';
+import './index.css'
+
+Modal.setAppElement('#root')
 
 const router = createBrowserRouter([
   {

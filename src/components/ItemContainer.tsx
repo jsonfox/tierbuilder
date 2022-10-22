@@ -15,9 +15,10 @@ export default function ItemContainer({ id, items }: Props) {
           <div className="flex flex-wrap">
             {items.map(({ imageUrl, key }, i) => (
               <Item
+                key={key}
+                itemId={key}
                 index={i}
                 imageUrl={imageUrl}
-                key={key}
               />
             ))}
           </div>

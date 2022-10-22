@@ -20,6 +20,7 @@
     "react-contenteditable": "^3.3.6",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-modal": "^3.16.1",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
     "redux": "^4.2.0"
@@ -27,7 +28,9 @@
   "devDependencies": {
     "@types/react": "^18.0.17",
     "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.6",
+    "@types/react-modal": "^3.13.1",
     "@vitejs/plugin-react": "^2.1.0",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.18",
