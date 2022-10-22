@@ -2,9 +2,9 @@ import { Draggable } from 'react-beautiful-dnd';
 import className from 'classnames';
 
 interface Props {
-  index: number,
-  imageUrl: string,
-  itemId: string
+  index: number;
+  imageUrl: string;
+  itemId: string;
 }
 
 export default function Item({ index, imageUrl, itemId }: Props) {
@@ -25,5 +25,5 @@ export default function Item({ index, imageUrl, itemId }: Props) {
         </div>
       )}
     </Draggable>
-  )
+  );
 }

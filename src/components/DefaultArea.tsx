@@ -6,5 +6,5 @@ export default function DefaultArea({ items }: { items: TbItem[] }) {
     <div className="container mx-auto">
       <ItemContainer id="default" items={items} />
     </div>
-  )
+  );
 }
