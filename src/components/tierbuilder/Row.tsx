@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from '../../redux/hooks';
-import {
-  MOVE_ROW,
-  RENAME_ROW
-} from '../../redux/actions';
+import { MOVE_ROW, RENAME_ROW } from '../../redux/actions';
 import ContentEditable from 'react-contenteditable';
 import ItemContainer from './ItemContainer';
 import SettingsModal from './SettingsModal';
 import { Settings, MoveUp, MoveDown } from '../icons';
-import {
-  TbItem
-} from '../../utils/types';
+import { TbItem } from '../../utils/types';
 
 interface Props {
   name: string;
@@ -25,7 +20,7 @@ export default function Row({
   color,
   items,
   rowIndex,
-  totalRows,
+  totalRows
 }: Props) {
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch();
@@ -36,31 +31,32 @@ export default function Row({
       rowIndex,
       name
     });
-  }
+  };
 
   const moveRow = (direction: string) => {
     dispatch({ type: MOVE_ROW, rowIndex, direction });
   };
 
-  const iconBtnStyle = "cursor-pointer hover:opacity-70"
+  const iconBtnStyle = 'cursor-pointer hover:opacity-70';
 
   return (
-    <div className="flex items-stretch min-h-20 h-20 border-black border-t last-of-type:border-b">
+    <div className="flex items-stretch border-t border-l border-black last-of-type:border-b">
       <ContentEditable
         tagName="label"
-        className="flex items-center justify-center text-center leading-4 w-24 p-1 break-all cursor-text border-black border-r"
-        style={{ backgroundColor: color }}
+        className="flex w-24 cursor-text items-center justify-center break-all border-r border-black p-1 text-center leading-4"
+        style={{ backgroundColor: color, minHeight: '80px' }}
         html={name}
         onChange={(e) => changeName(e.target.value)}
       />
       <div className="grow bg-neutral-800">
         <ItemContainer id={rowIndex.toString()} items={items} />
       </div>
-      <div className="flex items-center w-20 justify-evenly bg-black text-white">
+      <div className="flex w-20 items-center justify-evenly bg-black text-white">
         <Settings
           className={iconBtnStyle}
           size={30}
           onClick={() => setShowSettings(true)}
+          aria-label="settings"
         />
         <div className="flex flex-col">
           <MoveUp

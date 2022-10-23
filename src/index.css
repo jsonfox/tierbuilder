@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-svg[aria-disabled='true'] {
-  visibility: hidden;
+@layer base {
+  * {
+    transition: 0.2s;
+  }
+  button {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.15rem;
+    background-color: lightgray;
+    box-shadow: 0 0 0.15rem gray inset;
+  }
+  button:hover {
+    background: #00000048;
+  }
+  button:active {
+    transform: translateY(1px);
+  }
+  svg[aria-disabled='true'] {
+    cursor: default;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  svg[aria-label='up']:active {
+    transform: translateY(-2px);
+  }
+  svg[aria-label='down']:active {
+    transform: translateY(2px);
+  }
+  svg[aria-label='settings']:hover {
+    transform: rotate(60deg);
+  }
 }

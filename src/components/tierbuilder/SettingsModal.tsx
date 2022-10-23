@@ -5,7 +5,7 @@ import {
   ADD_ROW,
   CHANGE_ROW_COLOR,
   CLEAR_ROW,
-  REMOVE_ROW,
+  REMOVE_ROW
 } from '../../redux/actions';
 import Modal from 'react-modal';
 import { AnyFunction, StateAction } from '../../utils/types';

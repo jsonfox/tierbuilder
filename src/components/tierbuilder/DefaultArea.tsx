@@ -3,7 +3,7 @@ import { TbItem } from '../../utils/types';
 
 export default function DefaultArea({ items }: { items: TbItem[] }) {
   return (
-    <div className="container mx-auto">
+    <div>
       <ItemContainer id="default" items={items} />
     </div>
   );

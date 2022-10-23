@@ -1,11 +1,11 @@
 import base64url from 'base64url';
-import { RootState } from '../redux/store';
-import { TbRow, createItem, StateProps } from './types';
+import { createItem, StateProps } from './types';
 import { IMAGE_LIST } from './constants';
 
+// TODO: Replace any types
 // Returns a new array excluding the first element of the provided array
 export const tail = (array: any[]): any[] =>
-  array.length > 1 ? array.slice(1, -1) : [];
+  array.length > 1 ? array.slice(1) : [];
 
 // Returns a new copy of an array with an item moved from one index to another
 export const reorder = (
@@ -25,7 +25,8 @@ export const insert = (array: any[], index: number, item: any): any[] =>
   [...array].splice(index, 0, item);
 
 // Convert JSON to base64url encoded string;
-export const jsonToBase64url = (json: Record<string, unknown>) => base64url(JSON.stringify(json));
+export const jsonToBase64url = (json: Record<string, unknown>) =>
+  base64url(JSON.stringify(json));
 
 // Convert base64url encoded string to JSON
 export const base64urlToJson = (str: string) =>
@@ -46,21 +47,22 @@ export const updateClipboard = (str: string) => {
 };
 
 // Create copy of state to avoid state mutation
-export const copyState = (state: StateProps) => JSON.parse(JSON.stringify(state))
+export const copyState = (state: StateProps) =>
+  JSON.parse(JSON.stringify(state));
 
 export const createInitialState = () => {
-  const items = IMAGE_LIST.map(createItem)
+  const items = IMAGE_LIST.map(createItem);
   return {
     items: {
       all: items,
       current: items
     },
     rows: [
-      { name: 'A', color: 'green', items: [] },
-      { name: 'B', color: 'lightgreen', items: [] },
-      { name: 'C', color: 'yellow', items: [] },
-      { name: 'D', color: 'orange', items: [] },
-      { name: 'F', color: 'red', items: [] }
+      { name: 'A', color: '#FF7F7F', items: [] },
+      { name: 'B', color: '#FFBF7F', items: [] },
+      { name: 'C', color: '#FFDF7F', items: [] },
+      { name: 'D', color: '#FFFF7F', items: [] },
+      { name: 'F', color: '#BFFF7F', items: [] }
     ]
   };
 };

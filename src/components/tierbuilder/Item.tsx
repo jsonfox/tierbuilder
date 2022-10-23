@@ -18,7 +18,7 @@ export default function Item({ index, imageUrl, itemId }: Props) {
           className={className({ 'item--dragging': snapshot.isDragging })}
         >
           <div
-            className="w-20 h-20 bg-cover"
+            className="h-20 w-20 bg-cover"
             key={index}
             style={{ backgroundImage: `url(${imageUrl})` }}
           />

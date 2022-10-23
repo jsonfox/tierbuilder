@@ -1,15 +1,9 @@
 import { useDispatch, useSelector } from '../redux/hooks';
-import {
-  CLEAR_ALL_ROWS,
-  MOVE_ITEM,
-  RESET,
-  SET_DATA
-} from '../redux/actions';
+import { CLEAR_ALL_ROWS, MOVE_ITEM, RESET, SET_DATA } from '../redux/actions';
 import { useEffect, useState } from 'react';
 import {
   base64urlToJson,
   jsonToBase64url,
-  tail,
   updateClipboard
 } from '../utils/helpers';
 import {
@@ -31,7 +25,13 @@ function Tierbuilder() {
   const data = useSelector((state) => state).tierbuilder || initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
-    if (!dropInfo.destination) return;
+    const { source, destination } = dropInfo;
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
     dispatch({ type: MOVE_ITEM, dropInfo });
   };
 
@@ -63,14 +63,14 @@ function Tierbuilder() {
   }, [copyStatus]);
 
   useEffect(() => {
-    if (data.items.current.length < 1) {
+    if (data.items.all.length < 1) {
       dispatch({ type: SET_DATA, data: createInitialState() });
     }
   }, [data, dispatch]);
 
   return (
-    <>
-      <div className="controls">
+    <div className="flex-col space-y-6 py-12">
+      <div className="flex justify-center space-x-2">
         <button onClick={() => save()} className="btn">
           Save to URL
         </button>
@@ -91,21 +91,23 @@ function Tierbuilder() {
         </button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="container">
-          {data.rows.map(({ name, color, items }: TbRow, i: number) => (
-            <Row
-              key={`row-${i}`}
-              name={name}
-              color={color}
-              items={items}
-              rowIndex={i}
-              totalRows={data.rows.length}
-            />
-          ))}
+        <div className="container mx-auto max-w-6xl flex-col space-y-5">
+          <div className="flex-col">
+            {data.rows.map(({ name, color, items }: TbRow, i: number) => (
+              <Row
+                key={`row-${i}`}
+                name={name}
+                color={color}
+                items={items}
+                rowIndex={i}
+                totalRows={data.rows.length}
+              />
+            ))}
+          </div>
+          <DefaultArea items={data.items.current} />
         </div>
-        <DefaultArea items={data.items.current} />
       </DragDropContext>
-    </>
+    </div>
   );
 }
 

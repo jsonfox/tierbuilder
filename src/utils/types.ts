@@ -9,14 +9,14 @@ export type DispatchAction = (...args: any[]) => AppDispatch;
 export type AnyFunction = (...args: any[]) => any;
 export type Ref = React.RefObject<any>;
 export type Nodes = JSX.Element | JSX.Element[];
-export type TbItem = { imageUrl: string; key: string };
+export type TbItem = { key: string; imageUrl: string };
 export type TbRow = { name: string; color: string; items: TbItem[] };
 export interface StateProps {
   items: {
-    all: TbItem[],
-    current: TbItem[]
-  },
-  rows: TbRow[]
+    all: TbItem[];
+    current: TbItem[];
+  };
+  rows: TbRow[];
 }
 export const initialState: StateProps = {
   items: {
@@ -26,8 +26,8 @@ export const initialState: StateProps = {
   rows: []
 };
 export const createItem = (imageUrl: string): TbItem => ({
-  imageUrl,
-  key: new RandExp(/\w{5}/i).gen()
+  key: new RandExp(/\w{5}/i).gen(),
+  imageUrl
 });
 
 // Schema validation
