@@ -1,5 +1,5 @@
 export {
-  BsGearFill as Settings,
-  BsChevronUp as MoveUp,
-  BsChevronDown as MoveDown
-} from 'react-icons/bs';
+  FaCog as Settings,
+  FaChevronUp as MoveUp,
+  FaChevronDown as MoveDown
+} from 'react-icons/fa';

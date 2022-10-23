@@ -1,6 +1,6 @@
 import { Droppable } from 'react-beautiful-dnd';
 import Item from './Item';
-import { TbItem } from '../utils/types';
+import { TbItem } from '../../utils/types';
 
 interface Props {
   id: string;

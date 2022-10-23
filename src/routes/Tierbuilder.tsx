@@ -2,8 +2,6 @@ import { useDispatch, useSelector } from '../redux/hooks';
 import {
   CLEAR_ALL_ROWS,
   MOVE_ITEM,
-  MOVE_ROW,
-  RENAME_ROW,
   RESET,
   SET_DATA
 } from '../redux/actions';
@@ -20,7 +18,7 @@ import {
   copySuccessText
 } from '../utils/constants';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { DefaultArea, Row } from '../components';
+import { DefaultArea, Row } from '../components/tierbuilder';
 import className from 'classnames';
 import { useParams, redirect } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
@@ -37,15 +35,13 @@ function Tierbuilder() {
     dispatch({ type: MOVE_ITEM, dropInfo });
   };
 
-  const moveRow = (rowIndex: number, direction: string) => {
-    dispatch({ type: MOVE_ROW, rowIndex, direction });
-  };
-
   const save = () => redirect(`/t/${jsonToBase64url(data)}`);
+
   const reset = () => {
     redirect('/builder');
     dispatch({ type: RESET });
   };
+
   const clearRows = () => dispatch({ type: CLEAR_ALL_ROWS });
 
   const copyToClipboard = () => {
@@ -104,7 +100,6 @@ function Tierbuilder() {
                   name={name}
                   color={color}
                   items={items}
-                  moveRow={moveRow}
                   rowIndex={i + 1}
                   totalRows={tail(data).length}
                 />

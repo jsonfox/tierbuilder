@@ -1,15 +1,14 @@
 import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
 import { useState } from 'react';
-import { useDispatch, useSelector } from '../redux/hooks';
+import { useDispatch } from '../../redux/hooks';
 import {
   ADD_ROW,
   CHANGE_ROW_COLOR,
   CLEAR_ROW,
   REMOVE_ROW,
-  RENAME_ROW
-} from '../redux/actions';
+} from '../../redux/actions';
 import Modal from 'react-modal';
-import { AnyFunction, StateAction } from '../utils/types';
+import { AnyFunction, StateAction } from '../../utils/types';
 
 interface Props {
   isOpen: boolean;
