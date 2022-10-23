@@ -1,5 +1,6 @@
 import base64url from 'base64url';
-import { TbItem, TbRow, createItem, createRow } from './types';
+import { RootState } from '../redux/store';
+import { TbRow, createItem, StateProps } from './types';
 import { IMAGE_LIST } from './constants';
 
 // Returns a new array excluding the first element of the provided array
@@ -24,7 +25,7 @@ export const insert = (array: any[], index: number, item: any): any[] =>
   [...array].splice(index, 0, item);
 
 // Convert JSON to base64url encoded string;
-export const jsonToBase64url = (json: {}) => base64url(JSON.stringify(json));
+export const jsonToBase64url = (json: Record<string, unknown>) => base64url(JSON.stringify(json));
 
 // Convert base64url encoded string to JSON
 export const base64urlToJson = (str: string) =>
@@ -45,24 +46,21 @@ export const updateClipboard = (str: string) => {
 };
 
 // Create copy of state to avoid state mutation
-export const copyState = (state: TbRow[]) =>
-  state.map((row: TbRow) => Object.assign({}, row));
+export const copyState = (state: StateProps) => JSON.parse(JSON.stringify(state))
 
 export const createInitialState = () => {
-  const data = [];
-  const defaultArea = createRow(
-    'DEFAULT',
-    'none',
-    IMAGE_LIST.map((url, i) => createItem(url, 'Item ' + i))
-  );
-  data.push(defaultArea);
-  const rows = [
-    { name: 'A', color: 'green', items: [] },
-    { name: 'B', color: 'lightgreen', items: [] },
-    { name: 'C', color: 'yellow', items: [] },
-    { name: 'D', color: 'orange', items: [] },
-    { name: 'F', color: 'red', items: [] }
-  ];
-  rows.forEach((row) => data.push(row));
-  return data;
+  const items = IMAGE_LIST.map(createItem)
+  return {
+    items: {
+      all: items,
+      current: items
+    },
+    rows: [
+      { name: 'A', color: 'green', items: [] },
+      { name: 'B', color: 'lightgreen', items: [] },
+      { name: 'C', color: 'yellow', items: [] },
+      { name: 'D', color: 'orange', items: [] },
+      { name: 'F', color: 'red', items: [] }
+    ]
+  };
 };

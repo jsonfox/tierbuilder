@@ -11,15 +11,24 @@ export type Ref = React.RefObject<any>;
 export type Nodes = JSX.Element | JSX.Element[];
 export type TbItem = { imageUrl: string; key: string };
 export type TbRow = { name: string; color: string; items: TbItem[] };
+export interface StateProps {
+  items: {
+    all: TbItem[],
+    current: TbItem[]
+  },
+  rows: TbRow[]
+}
+export const initialState: StateProps = {
+  items: {
+    all: [],
+    current: []
+  },
+  rows: []
+};
 export const createItem = (imageUrl: string): TbItem => ({
   imageUrl,
   key: new RandExp(/\w{5}/i).gen()
 });
-export const createRow = (
-  name: string,
-  color: string,
-  items: TbItem[] = []
-): TbRow => ({ name, color, items });
 
 // Schema validation
 // export const EncodedSchema = z.object({
