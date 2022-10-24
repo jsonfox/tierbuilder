@@ -22,7 +22,7 @@ import { initialState, TbRow } from '../utils/types';
 function Tierbuilder() {
   const [copyStatus, setCopyStatus] = useState('');
   const dispatch = useDispatch();
-  const data = useSelector((state) => state).tierbuilder || initialState;
+  const data = useSelector((state) => state).tierbuilder ?? initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
     const { source, destination } = dropInfo;

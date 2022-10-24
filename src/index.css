@@ -12,18 +12,19 @@
   button {
     padding: 0.25rem 0.5rem;
     border-radius: 0.15rem;
-    background-color: lightgray;
-    box-shadow: 0 0 0.15rem gray inset;
+    outline: 1px solid lightgray;
+    background-color: #EEEEEE;
   }
   button:hover {
-    background: #00000048;
+    outline-color: gray;
+    background: #00000024;
   }
   button:active {
     transform: translateY(1px);
   }
-  svg[aria-disabled='true'] {
+  :is(:disabled, [aria-disabled='true']) {
     cursor: default;
-    opacity: 0.2;
+    opacity: 0.5;
     pointer-events: none;
   }
   svg[aria-label='up']:active {
@@ -34,5 +35,21 @@
   }
   svg[aria-label='settings']:hover {
     transform: rotate(60deg);
+  }
+  .picker div:has(span) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .picker {
+    box-shadow: none !important;
+  }
+  .picker span > div {
+    outline: 0.2px dotted #DFDFDF !important;
+  }
+  .picker span:last-of-type > div {
+    border-radius: 2rem !important;
+    box-shadow: 0 0 2px black;
+    pointer-events: none;
+    transition: 0.3s;
   }
 }

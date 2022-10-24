@@ -12,7 +12,7 @@ export default function ItemContainer({ id, items }: Props) {
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
         <div
-          className="max-auto flex flex-wrap overflow-hidden"
+          className="max-auto"
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

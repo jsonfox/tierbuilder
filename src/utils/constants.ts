@@ -1,19 +1,31 @@
-// List of default images for debugging
 const getImageUrl = (i: number) =>
   new URL(
     `../assets/images/test${i < 10 ? '0' + i : i.toString()}.png`,
     import.meta.url
   ).href;
+
+// List of default images for debugging
 export const IMAGE_LIST = Array.from(Array(15), (v, i) => getImageUrl(i + 1));
 
-// // Default rows
-// export const DEFAULT_ROWS = [
-//   { name: 'A', color: 'green' },
-//   { name: 'B', color: 'lightgreen' },
-//   { name: 'C', color: 'yellow' },
-//   { name: 'D', color: 'orange' },
-//   { name: 'F', color: 'red' }
-// ].map(({ name, color }) => createRow(name, color));
+// Label colors
+export const COLORS = [
+  "#FF7F7F",
+  "#FFBF7F",
+  "#FFDF7F",
+  "#FFFF7F",
+  "#BFFF7F",
+  "#7FFF7F",
+  "#7FFFFF",
+  "#7FBFFF",
+  "#1DA1F2",
+  "#7F7FFF",
+  "#BF7FBF",
+  "#FF7FFF",
+  "#666666",
+  "#BBBBBB",
+  "#EDEDED",
+  "#FFFFFF"
+]
 
 // Constants for copy to clipboard feedback
 export const copySuccessText = 'Copied!';

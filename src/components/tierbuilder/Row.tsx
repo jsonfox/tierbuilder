@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from '../../redux/hooks';
-import { MOVE_ROW, RENAME_ROW } from '../../redux/actions';
+import { useDispatch } from '../../redux/hooks'; import { MOVE_ROW, RENAME_ROW } from '../../redux/actions';
 import ContentEditable from 'react-contenteditable';
 import ItemContainer from './ItemContainer';
 import SettingsModal from './SettingsModal';
@@ -53,7 +52,6 @@ export default function Row({
       </div>
       <div className="flex w-20 items-center justify-evenly bg-black text-white">
         <Settings
-          className={iconBtnStyle}
           size={30}
           aria-label="settings"
           onClick={() => setShowSettings(true)}
