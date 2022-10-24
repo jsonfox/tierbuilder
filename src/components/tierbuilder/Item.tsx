@@ -12,14 +12,13 @@ export default function Item({ index, imageUrl, itemId }: Props) {
     <Draggable draggableId={itemId} index={index}>
       {(provided, snapshot) => (
         <div
-          className={className("inline-block", { "opacity-80": snapshot.isDragging })}
+          className={className({ "opacity-80": snapshot.isDragging })}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <div
-            className="h-20 w-20 bg-cover"
-            key={index}
+            className="w-20 h-20 bg-cover"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
         </div>
