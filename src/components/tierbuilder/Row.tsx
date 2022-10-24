@@ -40,10 +40,10 @@ export default function Row({
   const iconBtnStyle = 'cursor-pointer hover:opacity-70';
 
   return (
-    <div className="flex items-stretch border-t border-l border-black last-of-type:border-b">
+    <div className="flex items-stretch border-t border-black last-of-type:border-b">
       <ContentEditable
         tagName="label"
-        className="flex w-24 cursor-text items-center justify-center break-all border-r border-black p-1 text-center leading-4"
+        className="flex w-24 cursor-text items-center justify-center break-all border-x border-black p-1 text-center leading-4"
         style={{ backgroundColor: color, minHeight: '80px' }}
         html={name}
         onChange={(e) => changeName(e.target.value)}
@@ -55,8 +55,8 @@ export default function Row({
         <Settings
           className={iconBtnStyle}
           size={30}
-          onClick={() => setShowSettings(true)}
           aria-label="settings"
+          onClick={() => setShowSettings(true)}
         />
         <div className="flex flex-col">
           <MoveUp

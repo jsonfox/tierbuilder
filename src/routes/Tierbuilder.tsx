@@ -92,7 +92,7 @@ function Tierbuilder() {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container mx-auto max-w-6xl flex-col space-y-5">
-          <div className="flex-col">
+          <div className="rows flex-col">
             {data.rows.map(({ name, color, items }: TbRow, i: number) => (
               <Row
                 key={`row-${i}`}

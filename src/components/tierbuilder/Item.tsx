@@ -15,7 +15,7 @@ export default function Item({ index, imageUrl, itemId }: Props) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={className({ 'item--dragging': snapshot.isDragging })}
+          className={className({ 'opacity-80': snapshot.isDragging })}
         >
           <div
             className="h-20 w-20 bg-cover"
