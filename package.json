@@ -11,9 +11,9 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@reduxjs/toolkit": "^1.8.6",
     "base64url": "^3.0.1",
-    "bootstrap": "^5.2.2",
     "classnames": "^2.3.2",
     "randexp": "^0.5.3",
     "react": "^18.2.0",

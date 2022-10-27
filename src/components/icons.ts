@@ -4,6 +4,4 @@ export {
   FaChevronDown as MoveDown
 } from 'react-icons/fa';
 
-export {
-  IoClose as Close
-} from 'react-icons/io5'
+export { IoClose as Close } from 'react-icons/io5';

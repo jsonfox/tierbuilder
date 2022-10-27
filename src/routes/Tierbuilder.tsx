@@ -35,7 +35,9 @@ function Tierbuilder() {
     dispatch({ type: MOVE_ITEM, dropInfo });
   };
 
-  const save = () => redirect(`/t/${jsonToBase64url(data)}`);
+  const save = () => {
+    window.location.replace(`/builder/${jsonToBase64url(data)}`);
+  };
 
   const reset = () => {
     redirect('/builder');
@@ -112,13 +114,14 @@ function Tierbuilder() {
 }
 
 function Wrapper() {
-  // const { encoded } = useParams()
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   if (encoded && validateEncoded(encoded)) {
-  //     dispatch({ type: SET_DATA, data: base64urlToJson(encoded) })
-  //   }
-  // }, [encoded, dispatch])
+  const { encoded } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // if (encoded && validateEncoded(encoded)) {
+    if (encoded) {
+      dispatch({ type: SET_DATA, data: base64urlToJson(encoded) });
+    }
+  }, [encoded, dispatch]);
   return <Tierbuilder />;
 }
 

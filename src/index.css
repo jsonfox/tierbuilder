@@ -13,7 +13,7 @@
     padding: 0.25rem 0.5rem;
     border-radius: 0.15rem;
     outline: 1px solid lightgray;
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
   }
   button:hover {
     outline-color: gray;
@@ -44,7 +44,7 @@
     box-shadow: none !important;
   }
   .picker span > div {
-    outline: 0.2px dotted #DFDFDF !important;
+    outline: 0.2px dotted #dfdfdf !important;
   }
   .picker span:last-of-type > div {
     border-radius: 2rem !important;

@@ -83,9 +83,7 @@ export const tierbuilder = (
     case REMOVE_ROW:
     case CLEAR_ROW: {
       const { rowIndex } = action;
-      state.items.current = [...state.items.current].concat(
-        state.rows[rowIndex].items
-      );
+      state.items.current.push(...state.rows[rowIndex].items);
 
       if (action.type === CLEAR_ROW) {
         state.rows[rowIndex].items = [];
