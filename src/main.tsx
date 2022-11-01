@@ -6,7 +6,7 @@ import {
   RouterProvider,
   Navigate
 } from 'react-router-dom';
-import { Create, Import, Tierbuilder } from './routes';
+import { Create, Tierbuilder } from './routes';
 import store from './redux/store';
 import './index.css';
 
@@ -30,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: '/create',
     element: <Create />
-  },
-  {
-    path: '/import',
-    element: <Import />
   }
 ]);
 

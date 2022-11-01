@@ -1,18 +1,18 @@
+import RandExp from 'randexp';
 import base64url from 'base64url';
-import { createItem, StateProps } from './types';
+import { StateProps, TbItem } from './types';
 import { IMAGE_LIST } from './constants';
 
-// TODO: Replace any types
 // Returns a new array excluding the first element of the provided array
-export const tail = (array: any[]): any[] =>
+export const tail = (array: unknown[]): unknown[] =>
   array.length > 1 ? array.slice(1) : [];
 
 // Returns a new copy of an array with an item moved from one index to another
 export const reorder = (
-  array: any[],
+  array: unknown[],
   fromIndex: number,
   toIndex: number
-): any[] => {
+): unknown[] => {
   const arr = [...array];
   const [item] = arr.splice(fromIndex, 1);
   const insertIndex = toIndex - (fromIndex < toIndex ? 0 : 1);
@@ -21,7 +21,7 @@ export const reorder = (
 };
 
 // Returns a new array with an item inserted at a specified index
-export const insert = (array: any[], index: number, item: any): any[] =>
+export const insert = (array: unknown[], index: number, item: unknown): unknown[] =>
   [...array].splice(index, 0, item);
 
 // Convert JSON to base64url encoded string;
@@ -34,15 +34,10 @@ export const base64urlToJson = (str: string) =>
 
 // Copy text to clipboard
 export const updateClipboard = (str: string) => {
-  return new Promise((resolve, reject) => {
-    navigator.clipboard.writeText(str).then(
-      () => {
-        resolve('Success');
-      },
-      () => {
-        reject('Error');
-      }
-    );
+  return new Promise((res, rej) => {
+    navigator.clipboard.writeText(str)
+      .then(() => res('Copied'))
+      .catch(rej)
   });
 };
 
@@ -50,6 +45,12 @@ export const updateClipboard = (str: string) => {
 export const copyState = (state: StateProps) =>
   JSON.parse(JSON.stringify(state));
 
+export const createItem = (imageUrl: string): TbItem => ({
+  key: new RandExp(/\w{5}/i).gen(),
+  imageUrl
+});
+
+// Create example tierbuilder   
 export const createInitialState = () => {
   const items = IMAGE_LIST.map(createItem);
   return {

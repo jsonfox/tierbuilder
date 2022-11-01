@@ -1,13 +1,12 @@
-import RandExp from 'randexp';
 import React from 'react';
 import { AppDispatch } from '../redux/store';
 // import { z } from "zod"
 
 export type InputEvent = MouseEvent | TouchEvent | KeyboardEvent;
 export type StateAction = React.Dispatch<React.SetStateAction<boolean>>;
-export type DispatchAction = (...args: any[]) => AppDispatch;
-export type AnyFunction = (...args: any[]) => any;
-export type Ref = React.RefObject<any>;
+export type DispatchAction = (...args: unknown[]) => AppDispatch;
+export type AnyFunction = (...args: unknown[]) => unknown;
+export type Ref = React.RefObject<unknown>;
 export type Nodes = JSX.Element | JSX.Element[];
 export type TbItem = { key: string; imageUrl: string };
 export type TbRow = { name: string; color: string; items: TbItem[] };
@@ -25,10 +24,6 @@ export const initialState: StateProps = {
   },
   rows: []
 };
-export const createItem = (imageUrl: string): TbItem => ({
-  key: new RandExp(/\w{5}/i).gen(),
-  imageUrl
-});
 
 // Schema validation
 // export const EncodedSchema = z.object({

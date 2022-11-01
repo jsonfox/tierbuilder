@@ -8,7 +8,7 @@ import {
 } from '../../redux/actions';
 import Modal from 'react-modal';
 import { COLORS } from '../../utils/constants';
-import { AnyFunction, initialState, StateAction } from '../../utils/types';
+import { initialState, StateAction } from '../../utils/types';
 import { Close } from '../icons';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   name: string;
   rowIndex: number;
   setIsOpen: StateAction;
-  changeName: AnyFunction;
+  changeName: (name: string) => void;
 }
 
 export default function SettingsModal({

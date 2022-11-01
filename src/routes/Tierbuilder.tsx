@@ -14,7 +14,7 @@ import {
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { DefaultArea, Row } from '../components/tierbuilder';
 import className from 'classnames';
-import { useParams, redirect } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow } from '../utils/types';
 
@@ -22,6 +22,7 @@ import { initialState, TbRow } from '../utils/types';
 function Tierbuilder() {
   const [copyStatus, setCopyStatus] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector((state) => state).tierbuilder ?? initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
@@ -36,12 +37,12 @@ function Tierbuilder() {
   };
 
   const save = () => {
-    window.location.replace(`/builder/${jsonToBase64url(data)}`);
+    navigate(`/builder/${jsonToBase64url(data)}`);
   };
 
   const reset = () => {
-    redirect('/builder');
     dispatch({ type: RESET });
+    navigate('/builder');
   };
 
   const clearRows = () => dispatch({ type: CLEAR_ALL_ROWS });
