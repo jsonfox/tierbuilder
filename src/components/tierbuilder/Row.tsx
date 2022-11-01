@@ -40,7 +40,7 @@ export default function Row({
   const iconBtnStyle = 'cursor-pointer hover:opacity-70';
 
   return (
-    <div className="flex border-t border-black last-of-type:border-b">
+    <div className="row flex border-t border-black last-of-type:border-b">
       <ContentEditable
         tagName="label"
         className="flex w-24 cursor-text items-center justify-center break-all border-x border-black p-1 text-center leading-4"

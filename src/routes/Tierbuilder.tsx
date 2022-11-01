@@ -7,7 +7,7 @@ import {
   updateClipboard
 } from '../utils/helpers';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { DefaultArea, Row } from '../components/tierbuilder';
+import { DefaultArea, SaveModal, Row } from '../components/tierbuilder';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow, encodedValidator } from '../utils/types';
@@ -15,6 +15,7 @@ import { initialState, TbRow, encodedValidator } from '../utils/types';
 // Main tierbuilder component
 function Tierbuilder() {
   const [copyStatus, setCopyStatus] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state).tierbuilder ?? initialState;
@@ -54,6 +55,7 @@ function Tierbuilder() {
     }, 3000);
   };
 
+  // TODO: Remove after creating landing page
   useEffect(() => {
     if (data.pool.length < 1) {
       dispatch({ type: SET_DATA, data: createInitialState() });
@@ -61,33 +63,36 @@ function Tierbuilder() {
   }, [data, dispatch]);
 
   return (
-    <div className="flex-col space-y-6 py-12">
-      <div className="flex justify-center space-x-2">
-        <button onClick={() => save()}>Save to URL</button>
-        <button onClick={() => copyToClipboard()}>
-          {copyStatus || 'Save to clipboard'}
-        </button>
-        <button onClick={() => reset()}>Reset</button>
-        <button onClick={() => clearRows()}>Clear all rows</button>
-      </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="container mx-auto max-w-6xl flex-col space-y-5">
-          <div className="rows flex-col">
-            {data.rows.map(({ name, color, items }: TbRow, i: number) => (
-              <Row
-                key={`row-${i}`}
-                name={name}
-                color={color}
-                items={items}
-                rowIndex={i}
-                totalRows={data.rows.length}
-              />
-            ))}
-          </div>
-          <DefaultArea items={data.pool} />
+      <div className="flex-col space-y-6 py-12">
+        <div className="flex justify-center space-x-2">
+          <button onClick={() => save()}>Save to URL</button>
+          <button onClick={() => copyToClipboard()}>
+            {copyStatus || 'Save to clipboard'}
+          </button>
+          <button onClick={() => reset()}>Reset</button>
+          <button onClick={() => clearRows()}>Clear All Rows</button>
+          <button onClick={() => setShowModal(true)}>Save or Download</button>
         </div>
-      </DragDropContext>
-    </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="container mx-auto max-w-6xl flex-col space-y-5">
+            <div className="rows flex-col">
+              {data.rows.map(({ name, color, items }: TbRow, i: number) => (
+                <Row
+                  key={`row-${i}`}
+                  name={name}
+                  color={color}
+                  items={items}
+                  rowIndex={i}
+                  totalRows={data.rows.length}
+                />
+              ))}
+            </div>
+            <DefaultArea items={data.pool} />
+          </div>
+        </DragDropContext>
+
+        {showModal && <SaveModal rows={data.rows} isOpen={showModal} setIsOpen={setShowModal} />}
+      </div>
   );
 }
 
