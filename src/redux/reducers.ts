@@ -30,10 +30,7 @@ export const tierbuilder = (
 
     case MOVE_ITEM: {
       const { dropInfo } = action;
-      const rows = [
-        [...state.items.current],
-        ...state.rows.map((r) => r.items)
-      ];
+      const rows = [[...state.pool], ...state.rows.map((r) => r.items)];
       const { destination, source } = dropInfo;
       const [fromRow, toRow] = [
         source.droppableId,
@@ -50,7 +47,7 @@ export const tierbuilder = (
         rows[toRow].splice(toIndex, 0, toMove);
       }
 
-      state.items.current = rows[0];
+      state.pool = rows[0];
       tail(rows).forEach((row, i) => (state.rows[i].items = row));
 
       return state;
@@ -83,7 +80,7 @@ export const tierbuilder = (
     case REMOVE_ROW:
     case CLEAR_ROW: {
       const { rowIndex } = action;
-      state.items.current.push(...state.rows[rowIndex].items);
+      state.pool.push(...state.rows[rowIndex].items);
 
       if (action.type === CLEAR_ROW) {
         state.rows[rowIndex].items = [];
@@ -95,8 +92,10 @@ export const tierbuilder = (
     }
 
     case CLEAR_ALL_ROWS: {
-      state.rows = state.rows.map((row) => ({ ...row, items: [] }));
-      state.items.current = state.items.all;
+      state.rows = state.rows.map((row) => {
+        state.pool.push(...row.items);
+        return { ...row, items: [] };
+      });
       return state;
     }
 

@@ -26,8 +26,3 @@ export const COLORS = [
   '#EDEDED',
   '#FFFFFF'
 ];
-
-// Constants for copy to clipboard feedback
-export const copySuccessText = 'Copied!';
-export const copyErrorText = 'Error copying!';
-export const copyStatusResetTimer = 2000;

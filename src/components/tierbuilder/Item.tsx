@@ -1,5 +1,4 @@
 import { Draggable } from 'react-beautiful-dnd';
-import className from 'classnames';
 
 interface Props {
   index: number;
@@ -12,7 +11,7 @@ export default function Item({ index, imageUrl, itemId }: Props) {
     <Draggable draggableId={itemId} index={index}>
       {(provided, snapshot) => (
         <div
-          className={className({ 'opacity-80': snapshot.isDragging })}
+          className={snapshot.isDragging ? 'opacity-80' : ''}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

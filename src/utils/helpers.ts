@@ -21,8 +21,11 @@ export const reorder = (
 };
 
 // Returns a new array with an item inserted at a specified index
-export const insert = (array: unknown[], index: number, item: unknown): unknown[] =>
-  [...array].splice(index, 0, item);
+export const insert = (
+  array: unknown[],
+  index: number,
+  item: unknown
+): unknown[] => [...array].splice(index, 0, item);
 
 // Convert JSON to base64url encoded string;
 export const jsonToBase64url = (json: Record<string, unknown>) =>
@@ -35,9 +38,10 @@ export const base64urlToJson = (str: string) =>
 // Copy text to clipboard
 export const updateClipboard = (str: string) => {
   return new Promise((res, rej) => {
-    navigator.clipboard.writeText(str)
+    navigator.clipboard
+      .writeText(str)
       .then(() => res('Copied'))
-      .catch(rej)
+      .catch(rej);
   });
 };
 
@@ -45,19 +49,17 @@ export const updateClipboard = (str: string) => {
 export const copyState = (state: StateProps) =>
   JSON.parse(JSON.stringify(state));
 
+// Create TbItem from URL
 export const createItem = (imageUrl: string): TbItem => ({
   key: new RandExp(/\w{5}/i).gen(),
   imageUrl
 });
 
-// Create example tierbuilder   
+// Create example tierbuilder
 export const createInitialState = () => {
   const items = IMAGE_LIST.map(createItem);
   return {
-    items: {
-      all: items,
-      current: items
-    },
+    pool: items,
     rows: [
       { name: 'A', color: '#FF7F7F', items: [] },
       { name: 'B', color: '#FFBF7F', items: [] },
