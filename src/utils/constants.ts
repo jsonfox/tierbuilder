@@ -7,6 +7,9 @@ const getImageUrl = (i: number) =>
 // List of default images for debugging
 export const IMAGE_LIST = Array.from(Array(15), (v, i) => getImageUrl(i + 1));
 
+// Default row names
+export const ROW_NAMES = ['S', 'A', 'B', 'C', 'D'];
+
 // Label colors
 export const COLORS = [
   '#FF7F7F',

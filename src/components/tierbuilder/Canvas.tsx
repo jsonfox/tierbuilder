@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef, RefObject } from 'react';
 import { TbRow } from '../../utils/types';
 
 const pal = {
@@ -28,7 +28,7 @@ interface State {
 }
 
 export default class Canvas extends Component<Props, State> {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
+  canvasRef: RefObject<HTMLCanvasElement>;
   domRows: number[];
 
   constructor(props: Props) {

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from '../redux/hooks';
-import { CLEAR_ALL_ROWS, MOVE_ITEM, RESET, SET_DATA } from '../redux/actions';
+import { CLEAR_ALL_ROWS, MOVE_ITEM, SET_DATA } from '../redux/actions';
 import { useEffect, useState } from 'react';
 import {
   base64urlToJson,
@@ -11,13 +11,15 @@ import { DefaultArea, SaveModal, Row } from '../components/tierbuilder';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow, encodedValidator } from '../utils/types';
+import { Button, LabelIcon } from '../components';
+import { ClearAll, Copied, Copy, Save } from '../components/icons';
 
 // Main tierbuilder component
 function Tierbuilder() {
-  const [copyStatus, setCopyStatus] = useState('');
+  const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(0);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const data = useSelector((state) => state).tierbuilder ?? initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
@@ -32,27 +34,23 @@ function Tierbuilder() {
     dispatch({ type: MOVE_ITEM, dropInfo });
   };
 
-  const save = () => {
-    navigate(`/builder/${jsonToBase64url(data)}`);
-  };
-
-  const reset = () => {
-    dispatch({ type: RESET });
-    navigate('/builder');
-  };
-
   const clearRows = () => dispatch({ type: CLEAR_ALL_ROWS });
 
   const copyToClipboard = () => {
-    updateClipboard(jsonToBase64url(data))
-      .then(() => setCopyStatus('Copied to clipboard'))
+    clearTimeout(timeoutId);
+    updateClipboard(
+      `${window.location.origin}/builder/${jsonToBase64url(data)}`
+    )
+      .then(() => setCopied(true))
       .catch((err) => {
         console.error(err);
-        setCopyStatus('Failed to copy');
+        setCopied(false);
       });
-    setTimeout(() => {
-      setCopyStatus('');
-    }, 3000);
+    setTimeoutId(
+      window.setTimeout(() => {
+        setCopied(false);
+      }, 3000)
+    );
   };
 
   useEffect(() => {
@@ -64,13 +62,21 @@ function Tierbuilder() {
   return (
     <div className="flex-col space-y-6 py-12">
       <div className="flex justify-center space-x-2">
-        <button onClick={() => save()}>Save to URL</button>
-        <button onClick={() => copyToClipboard()}>
-          {copyStatus || 'Save to clipboard'}
-        </button>
-        <button onClick={() => reset()}>Reset</button>
-        <button onClick={() => clearRows()}>Clear All Rows</button>
-        <button onClick={() => setShowModal(true)}>Save or Download</button>
+        <Button aria-label="Copy as URL" onClick={() => copyToClipboard()}>
+          {copied
+            ? 'Copied\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
+            : 'Copy As URL'}
+          <LabelIcon Icon={copied ? Copied : Copy} />
+        </Button>
+
+        <Button aria-label="Clear all rows" onClick={() => clearRows()}>
+          Clear All Rows
+          <LabelIcon Icon={ClearAll} />
+        </Button>
+        <Button aria-label="Save image" onClick={() => setShowModal(true)}>
+          Save Image
+          <LabelIcon Icon={Save} />
+        </Button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container mx-auto max-w-6xl flex-col space-y-5">

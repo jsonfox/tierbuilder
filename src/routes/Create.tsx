@@ -1,7 +1,3 @@
-import React from 'react';
-
-type Props = {};
-
-export default function Create({}: Props) {
+export default function Create() {
   return <div>Create</div>;
 }

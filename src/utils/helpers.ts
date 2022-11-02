@@ -1,7 +1,7 @@
 import RandExp from 'randexp';
 import base64url from 'base64url';
 import { StateProps, TbItem } from './types';
-import { IMAGE_LIST } from './constants';
+import { IMAGE_LIST, ROW_NAMES, COLORS } from './constants';
 
 // Returns a new array excluding the first element of the provided array
 export const tail = (array: unknown[]): unknown[] =>
@@ -60,16 +60,13 @@ export const createItem = (imageUrl: string): TbItem => ({
 });
 
 // Create example tierbuilder
-export const createInitialState = () => {
-  const items = IMAGE_LIST.map(createItem);
+export const createInitialState = (
+  images: string[] = IMAGE_LIST,
+  labels: string[] = ROW_NAMES
+) => {
+  const items = images.map(createItem);
   return {
     pool: items,
-    rows: [
-      { name: 'A', color: '#FF7F7F', items: [] },
-      { name: 'B', color: '#FFBF7F', items: [] },
-      { name: 'C', color: '#FFDF7F', items: [] },
-      { name: 'D', color: '#FFFF7F', items: [] },
-      { name: 'F', color: '#BFFF7F', items: [] }
-    ]
+    rows: labels.map((name, i) => ({ name, color: COLORS[i], items: [] }))
   };
 };

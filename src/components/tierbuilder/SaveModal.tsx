@@ -1,7 +1,9 @@
 import Modal from 'react-modal';
-import { Close } from '../icons';
+import { Close, Download, Success } from '../icons';
 import Canvas from './Canvas';
 import { StateAction, TbRow } from '../../utils/types';
+import { Button, LabelIcon } from '../';
+import { useState } from 'react';
 
 interface Props {
   rows: TbRow[];
@@ -10,21 +12,40 @@ interface Props {
 }
 
 export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
-  const closeModal = () => setIsOpen(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(0);
 
   const downloadImage = () => {
     const img = document.querySelector('canvas')?.toDataURL('image/png');
     if (!img) return;
+    clearTimeout(timeoutId);
 
     const link = document.createElement('a');
     link.download = 'download.png';
     link.href = img;
     link.click();
+    setDownloaded(true);
+    setTimeoutId(
+      window.setTimeout(() => {
+        setDownloaded(false);
+      }, 3000)
+    );
+  };
+
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 100);
   };
 
   return (
     <Modal
-      className="relative top-12 mx-auto flex max-w-fit flex-col items-center rounded-sm bg-white p-8"
+      className={`${
+        isClosing ? 'out ' : ''
+      }relative top-12 mx-auto flex max-w-fit flex-col items-center rounded-sm bg-white p-8`}
       isOpen={isOpen}
       style={{
         overlay: {
@@ -38,9 +59,10 @@ export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
         size={30}
         onClick={closeModal}
       />
-      <button className="mb-4" onClick={() => downloadImage()}>
+      <Button className="mb-4" onClick={() => downloadImage()}>
         Download Image
-      </button>
+        <LabelIcon Icon={downloaded ? Success : Download} />
+      </Button>
       <Canvas rows={rows} />
     </Modal>
   );

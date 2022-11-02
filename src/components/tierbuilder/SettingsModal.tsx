@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ColorResult, TwitterPicker } from 'react-color';
 import { useSelector, useDispatch } from '../../redux/hooks';
 import {
@@ -10,6 +11,7 @@ import Modal from 'react-modal';
 import { COLORS } from '../../utils/constants';
 import { initialState, StateAction } from '../../utils/types';
 import { Close } from '../icons';
+import { Button } from '../';
 
 interface Props {
   isOpen: boolean;
@@ -28,6 +30,7 @@ export default function SettingsModal({
   setIsOpen,
   changeName
 }: Props) {
+  const [isClosing, setIsClosing] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((state) => state).tierbuilder ?? initialState;
 
@@ -52,11 +55,19 @@ export default function SettingsModal({
     });
   };
 
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 100);
+  };
 
   return (
     <Modal
-      className="relative mx-auto flex flex-col items-center space-y-4 rounded-sm bg-white pt-2 pb-10 text-center md:w-2/3 lg:w-1/2"
+      className={`${
+        isClosing ? 'out ' : ''
+      }relative mx-auto flex flex-col items-center space-y-4 rounded-sm bg-white pt-2 pb-10 text-center md:w-2/3 lg:w-1/2`}
       isOpen={isOpen}
       style={{
         overlay: {
@@ -96,14 +107,14 @@ export default function SettingsModal({
       </section>
       <section className="flex w-full justify-center space-x-3">
         <div className="flex w-1/3 flex-col space-y-2">
-          <button onClick={() => addRow('above')}>Add row above</button>
-          <button onClick={() => addRow('below')}>Add row below</button>
+          <Button onClick={() => addRow('above')}>Add row above</Button>
+          <Button onClick={() => addRow('below')}>Add row below</Button>
         </div>
         <section className="flex w-1/3 flex-col space-y-2">
-          <button onClick={clearRow}>Clear row</button>
-          <button onClick={removeRow} disabled={data.rows.length < 2}>
+          <Button onClick={clearRow}>Clear row</Button>
+          <Button onClick={removeRow} disabled={data.rows.length < 2}>
             Remove row
-          </button>
+          </Button>
         </section>
       </section>
     </Modal>

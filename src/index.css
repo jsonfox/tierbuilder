@@ -9,19 +9,6 @@
   :is(button, svg) {
     transition: 0.2s;
   }
-  button {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.15rem;
-    outline: 1px solid lightgray;
-    background-color: #eeeeee;
-  }
-  button:hover {
-    outline-color: gray;
-    background: #00000024;
-  }
-  button:active {
-    transform: translateY(1px);
-  }
   :is(:disabled, [aria-disabled='true']) {
     cursor: default;
     opacity: 0.5;
@@ -51,5 +38,22 @@
     box-shadow: 0 0 2px black;
     pointer-events: none;
     transition: 0.3s;
+  }
+  [class*='Overlay'] {
+    animation: 0.15s fadein;
+    transition: 0.1s opacity;
+  }
+  .out {
+    opacity: 0;
+    transition: 0.1s opacity;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
