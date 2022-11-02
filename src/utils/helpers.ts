@@ -25,7 +25,11 @@ export const insert = (
   array: unknown[],
   index: number,
   item: unknown
-): unknown[] => [...array].splice(index, 0, item);
+): unknown[] => {
+  const arr = [...array];
+  arr.splice(index, 0, item);
+  return arr;
+};
 
 // Convert JSON to base64url encoded string;
 export const jsonToBase64url = (json: Record<string, unknown>) =>

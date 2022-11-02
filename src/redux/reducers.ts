@@ -55,8 +55,9 @@ export const tierbuilder = (
 
     case ADD_ROW: {
       const { rowIndex, direction } = action;
-      const newRow = { name: 'New Row', color: 'grey', items: [] };
+      const newRow = { name: 'NEW', color: '#FFFF7F', items: [] };
       const insertIndex = direction === 'above' ? rowIndex : rowIndex + 1;
+      console.log(state.rows, insert(state.rows, insertIndex, newRow));
       return {
         ...state,
         rows: insert(state.rows, insertIndex, newRow)
