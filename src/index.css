@@ -3,16 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    background: #fdfcfb;
+  }
   .rows > :not(:last-of-type) {
     border-top: 1px solid black;
-  }
-  :is(button, svg) {
-    transition: 0.2s;
   }
   :is(:disabled, [aria-disabled='true']) {
     cursor: default;
     opacity: 0.5;
     pointer-events: none;
+  }
+  svg {
+    transition: 0.15s;
   }
   svg[aria-label='up']:active {
     transform: translateY(-2px);

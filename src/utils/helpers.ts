@@ -59,7 +59,7 @@ export const createItem = (imageUrl: string): TbItem => ({
   imageUrl
 });
 
-// Create example tierbuilder
+// Create tierbuilder state
 export const createInitialState = (
   images: string[] = IMAGE_LIST,
   labels: string[] = ROW_NAMES

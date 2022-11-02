@@ -13,14 +13,10 @@ export default function Layout() {
   };
 
   return (
-    <div>
+    <div className="select-none">
       <header className="flex justify-between px-8 py-4">
-        <div className="flex items-center space-x-1 font-title">
-          <img
-            src="/logo.svg"
-            alt="Tierbuilder logo"
-            style={{ height: '3.5rem' }}
-          />
+        <div className="flex items-center space-x-2 font-title">
+          <img className="h-14" src="/logo.svg" alt="Tierbuilder logo" />
           <h1
             className="mt-[-0.15em] text-center text-6xl"
             aria-label="Tierbuilder"

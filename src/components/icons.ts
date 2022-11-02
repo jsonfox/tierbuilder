@@ -2,7 +2,8 @@ export {
   FaCog as Settings,
   FaChevronUp as MoveUp,
   FaChevronDown as MoveDown,
-  FaRegSave as Save
+  FaRegSave as Save,
+  FaTrashAlt as Trash
 } from 'react-icons/fa';
 
 export {
