@@ -4,15 +4,15 @@ import { StateProps, TbItem } from './types';
 import { IMAGE_LIST, ROW_NAMES, COLORS } from './constants';
 
 // Returns a new array excluding the first element of the provided array
-export const tail = (array: unknown[]): unknown[] =>
+export const tail = (array: any[]): any[] =>
   array.length > 1 ? array.slice(1) : [];
 
 // Returns a new copy of an array with an item moved from one index to another
 export const reorder = (
-  array: unknown[],
+  array: any[],
   fromIndex: number,
   toIndex: number
-): unknown[] => {
+): any[] => {
   const arr = [...array];
   const [item] = arr.splice(fromIndex, 1);
   const insertIndex = toIndex - (fromIndex < toIndex ? 0 : 1);
@@ -21,18 +21,14 @@ export const reorder = (
 };
 
 // Returns a new array with an item inserted at a specified index
-export const insert = (
-  array: unknown[],
-  index: number,
-  item: unknown
-): unknown[] => {
+export const insert = (array: any[], index: number, item: any): any[] => {
   const arr = [...array];
   arr.splice(index, 0, item);
   return arr;
 };
 
 // Convert JSON to base64url encoded string;
-export const jsonToBase64url = (json: Record<string, unknown>) =>
+export const jsonToBase64url = (json: Record<string, any>) =>
   base64url(JSON.stringify(json));
 
 // Convert base64url encoded string to JSON

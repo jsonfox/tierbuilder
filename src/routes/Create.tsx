@@ -5,6 +5,8 @@ import { ROW_NAMES } from '../utils/constants';
 import { SET_DATA } from '../redux/actions';
 import { createInitialState } from '../utils/helpers';
 import { Trash } from '../components/icons';
+import { FileDrop } from 'react-file-drop';
+import { Button } from '../components/generic';
 
 export default function Create() {
   const [rowNames, setRowNames] = useState(ROW_NAMES);
@@ -18,8 +20,8 @@ export default function Create() {
     setRowNames(names);
   };
 
-  const handleUpload = ({ target }: { target: HTMLInputElement }) => {
-    if (!target.files?.length) return;
+  const handleUpload = (fileList: FileList | null) => {
+    if (!fileList?.length) return;
 
     const readFile = (file: File) =>
       new Promise((res, rej) => {
@@ -29,12 +31,10 @@ export default function Create() {
         reader.readAsDataURL(file);
       });
 
-    Promise.all<any>(Array.from(target.files).map(readFile)).then(
-      (fileUrls) => {
-        const allFiles = [...new Set([...files, ...fileUrls])];
-        setFiles(allFiles);
-      }
-    );
+    Promise.all<any>(Array.from(fileList).map(readFile)).then((fileUrls) => {
+      const allFiles = [...new Set([...files, ...fileUrls])];
+      setFiles(allFiles);
+    });
   };
 
   const removeImage = (uri: string) => {
@@ -64,31 +64,43 @@ export default function Create() {
           ))}
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="w-1/2 space-y-2">
         <Label forId="images" text="Add Custom Images" />
         <form
           className="flex flex-col items-center space-y-6"
           onSubmit={(e) => handleFormSubmit(e)}
         >
-          <label
-            className="flex h-64 w-[32rem] items-center justify-center rounded-md bg-sky-50 p-24 text-2xl leading-10 text-sky-900 outline-dashed outline-sky-200"
-            htmlFor="files"
+          <FileDrop
+            className="flex h-32 w-3/5 items-center justify-center rounded-lg bg-slate-100 text-xl leading-8 outline-dashed outline-slate-300"
+            draggingOverTargetClassName="bg-green-50 outline-green-400"
+            onDrop={(files) => handleUpload(files)}
           >
-            Drag and drop your images or click here to browse
-          </label>
+            <label
+              className="flex h-full w-full cursor-pointer items-center justify-center"
+              htmlFor="files"
+            >
+              Drop files here
+              <br />
+              or click to browse
+            </label>
+          </FileDrop>
           <input
-            className="absolute opacity-0"
+            className="pointer-events-none absolute opacity-0"
             accept="image/png, image/jpeg, image/jpg"
             type="file"
             id="files"
             multiple={true}
-            onChange={handleUpload}
+            onChange={(e) => handleUpload(e.target.files)}
           />
-          {files.length > 0 && (
-            <div className="flex flex-wrap space-x-1">
+          <div className="max-w-[592px] leading-5">
+            <p className="text-2xl">{files.length} Images</p>
+            {files.length > 0 && (
+              <p className="mb-2">Click on an image to remove it</p>
+            )}
+            <div className="flex flex-wrap">
               {files.map((uri, i) => (
                 <div
-                  className="group flex h-20 w-20 items-center justify-center rounded-sm bg-cover hover:scale-105"
+                  className="group ml-1 mt-1 flex h-20 w-20 items-center justify-center rounded-sm bg-cover hover:scale-105"
                   style={{ backgroundImage: `url(${uri})` }}
                   key={i}
                   onClick={() => removeImage(uri)}
@@ -100,9 +112,10 @@ export default function Create() {
                 </div>
               ))}
             </div>
-          )}
-          <input
-            className="bg-blue"
+          </div>
+          <Button
+            className="w-1/5 text-xl"
+            isInput
             type="submit"
             value="Create"
             disabled={files.length < 2}

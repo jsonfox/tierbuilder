@@ -11,7 +11,7 @@ import { DefaultArea, SaveModal, Row } from '../components/tierbuilder';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow, encodedValidator } from '../utils/types';
-import { Button, LabelIcon } from '../components';
+import { ButtonWithIcon } from '../components/generic';
 import { ClearAll, Copied, Copy, Save } from '../components/icons';
 
 // Main tierbuilder component
@@ -62,25 +62,33 @@ function Tierbuilder() {
   return (
     <div className="flex-col space-y-6 py-12">
       <div className="flex justify-center space-x-2">
-        <Button aria-label="Copy as URL" onClick={() => copyToClipboard()}>
+        <ButtonWithIcon
+          aria-label="Copy as URL"
+          Icon={copied ? Copied : Copy}
+          onClick={() => copyToClipboard()}
+        >
           {copied
             ? 'Copied\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
             : 'Copy As URL'}
-          <LabelIcon Icon={copied ? Copied : Copy} />
-        </Button>
-
-        <Button aria-label="Clear all rows" onClick={() => clearRows()}>
+        </ButtonWithIcon>
+        <ButtonWithIcon
+          aria-label="Clear all rows"
+          Icon={ClearAll}
+          onClick={() => clearRows()}
+        >
           Clear All Rows
-          <LabelIcon Icon={ClearAll} />
-        </Button>
-        <Button aria-label="Save image" onClick={() => setShowModal(true)}>
+        </ButtonWithIcon>
+        <ButtonWithIcon
+          aria-label="Save image"
+          Icon={Save}
+          onClick={() => setShowModal(true)}
+        >
           Save Image
-          <LabelIcon Icon={Save} />
-        </Button>
+        </ButtonWithIcon>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container mx-auto max-w-6xl flex-col space-y-5">
-          <div className="rows flex-col">
+          <div className="rows flex-col space-y-[1px]">
             {data.rows.map(({ name, color, items }: TbRow, i: number) => (
               <Row
                 key={`row-${i}`}

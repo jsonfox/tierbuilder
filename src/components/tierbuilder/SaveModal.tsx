@@ -2,7 +2,7 @@ import Modal from 'react-modal';
 import { Close, Download, Success } from '../icons';
 import Canvas from './Canvas';
 import { StateAction, TbRow } from '../../utils/types';
-import { Button, LabelIcon } from '../';
+import { ButtonWithIcon } from '../generic';
 import { useState } from 'react';
 
 interface Props {
@@ -59,10 +59,13 @@ export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
         size={30}
         onClick={closeModal}
       />
-      <Button className="mb-4" onClick={() => downloadImage()}>
+      <ButtonWithIcon
+        className="mb-4"
+        Icon={downloaded ? Success : Download}
+        onClick={() => downloadImage()}
+      >
         Download Image
-        <LabelIcon Icon={downloaded ? Success : Download} />
-      </Button>
+      </ButtonWithIcon>
       <Canvas rows={rows} />
     </Modal>
   );

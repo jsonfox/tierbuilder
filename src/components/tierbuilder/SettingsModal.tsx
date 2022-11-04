@@ -11,7 +11,7 @@ import Modal from 'react-modal';
 import { COLORS } from '../../utils/constants';
 import { initialState, StateAction } from '../../utils/types';
 import { Close } from '../icons';
-import { Button } from '../';
+import { Button } from '../generic';
 
 interface Props {
   isOpen: boolean;
