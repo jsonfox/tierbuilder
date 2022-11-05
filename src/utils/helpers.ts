@@ -66,3 +66,7 @@ export const createInitialState = (
     rows: labels.map((name, i) => ({ name, color: COLORS[i], items: [] }))
   };
 };
+
+// Join multiple class name strinngs
+export const joinClassNames = (...args: Array<string | undefined>) =>
+  args.filter((c) => c).join(' ');

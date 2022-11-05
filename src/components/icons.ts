@@ -13,7 +13,10 @@ export {
   MdOutlineLayersClear as ClearAll
 } from 'react-icons/md';
 
-export { CgExtensionRemove as ClearRow } from 'react-icons/cg';
+export {
+  CgExtensionRemove as ClearRow,
+  CgSpinner as Spinner
+} from 'react-icons/cg';
 
 export {
   HiOutlineClipboardCopy as Copy,

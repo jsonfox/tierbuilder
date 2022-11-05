@@ -6,10 +6,9 @@ interface Props extends ButtonHTMLAttributes<unknown> {
   Icon: IconType;
 }
 
-export default function ButtonWithIcon(props: Props) {
-  const { Icon, children, ...buttonProps } = props;
+export default function ButtonWithIcon({ Icon, children, ...props }: Props) {
   return (
-    <Button {...buttonProps}>
+    <Button {...props}>
       {children}
       <Icon size={22} className="ml-1" />
     </Button>

@@ -4,13 +4,22 @@ import { useDispatch } from '../redux/hooks';
 import { ROW_NAMES } from '../utils/constants';
 import { SET_DATA } from '../redux/actions';
 import { createInitialState } from '../utils/helpers';
-import { Trash } from '../components/icons';
+import { Spinner, Trash } from '../components/icons';
 import { FileDrop } from 'react-file-drop';
 import { Button } from '../components/generic';
+import ImageKit from 'imagekit';
+
+const imagekit = new ImageKit({
+  publicKey: 'public_gwKcX/++rPU4fc4RB/QMIYmJyq8=',
+  privateKey: 'private_LU4ePNOgLAG6gWbVPUr7kkbinOA=',
+  urlEndpoint: 'https://ik.imagekit.io/29vh5ato1/'
+});
 
 export default function Create() {
   const [rowNames, setRowNames] = useState(ROW_NAMES);
   const [files, setFiles] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,13 +50,44 @@ export default function Create() {
     setFiles((files) => files.filter((file) => file !== uri));
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
+  const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    dispatch({ type: SET_DATA, data: createInitialState(files, rowNames) });
+    setError(false);
+    setUploading(true);
+
+    const res = await Promise.all(
+      files.map((file) =>
+        imagekit.upload({
+          file,
+          fileName: 'image.' + file.match(/image\/(.*);base64/)?.at(1)
+        })
+      )
+    );
+
+    if (!res.every((r) => r.fileId)) {
+      setUploading(false);
+      setError(true);
+      return;
+    }
+
+    dispatch({
+      type: SET_DATA,
+      data: createInitialState(
+        res.map((img) => img.url),
+        rowNames
+      )
+    });
     return navigate('/builder');
   };
 
-  return (
+  return uploading ? (
+    <div className="mt-1/3 mx-auto mt-[20%] flex max-w-[450px] flex-col items-center justify-center space-y-5 text-center text-4xl leading-relaxed">
+      <Spinner size={100} className="animate-spin" />
+      Uploading {files.length} images....
+      <br />
+      Creating your Tierbuilder...
+    </div>
+  ) : (
     <div className="flex flex-col items-center space-y-10 text-center">
       <div className="space-y-2">
         <Label forId="names" text="Customize Row Labels" />
@@ -68,7 +108,7 @@ export default function Create() {
         <Label forId="images" text="Add Custom Images" />
         <form
           className="flex flex-col items-center space-y-6"
-          onSubmit={(e) => handleFormSubmit(e)}
+          onSubmit={handleFormSubmit}
         >
           <FileDrop
             className="flex h-32 w-3/5 items-center justify-center rounded-lg bg-slate-100 text-xl leading-8 outline-dashed outline-slate-300"
@@ -113,6 +153,12 @@ export default function Create() {
               ))}
             </div>
           </div>
+          {error && (
+            <span className="text-red-500">
+              There was an error uploading one or more of your images, please
+              try again.
+            </span>
+          )}
           <Button
             className="w-1/5 text-xl"
             isInput

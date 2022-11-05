@@ -11,7 +11,7 @@ import { DefaultArea, SaveModal, Row } from '../components/tierbuilder';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow, encodedValidator } from '../utils/types';
-import { ButtonWithIcon } from '../components/generic';
+import { Button } from '../components/generic';
 import { ClearAll, Copied, Copy, Save } from '../components/icons';
 
 // Main tierbuilder component
@@ -62,29 +62,20 @@ function Tierbuilder() {
   return (
     <div className="flex-col space-y-6 py-12">
       <div className="flex justify-center space-x-2">
-        <ButtonWithIcon
-          aria-label="Copy as URL"
-          Icon={copied ? Copied : Copy}
-          onClick={() => copyToClipboard()}
-        >
+        <Button aria-label="Copy as URL" onClick={() => copyToClipboard()}>
           {copied
             ? 'Copied\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
             : 'Copy As URL'}
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          aria-label="Clear all rows"
-          Icon={ClearAll}
-          onClick={() => clearRows()}
-        >
+          {copied ? <Copied size={22} /> : <Copy size={22} />}
+        </Button>
+        <Button aria-label="Clear all rows" onClick={() => clearRows()}>
           Clear All Rows
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          aria-label="Save image"
-          Icon={Save}
-          onClick={() => setShowModal(true)}
-        >
+          <ClearAll size={22} />
+        </Button>
+        <Button aria-label="Save image" onClick={() => setShowModal(true)}>
           Save Image
-        </ButtonWithIcon>
+          <Save size={22} />
+        </Button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container mx-auto max-w-6xl flex-col space-y-5">

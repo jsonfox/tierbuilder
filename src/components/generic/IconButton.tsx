@@ -6,7 +6,12 @@ interface Props extends IconBaseProps {
   activeClassNames?: string;
 }
 
-export default function IconButton(props: Props) {
+export default function IconButton({
+  Icon,
+  hoverClassNames = '',
+  activeClassNames = '',
+  ...props
+}: Props) {
   const addSelectors = (classes: string, selector: string) => {
     if (!classes) return '';
     return classes
@@ -14,11 +19,10 @@ export default function IconButton(props: Props) {
       .map((c) => `${selector}:${c}`)
       .join(' ');
   };
-  const { Icon, hoverClassNames, activeClassNames, ...iconProps } = props;
 
   return (
     <Icon
-      {...iconProps}
+      {...props}
       size={props.size || 20}
       className={[
         'cursor-pointer transition-all',
