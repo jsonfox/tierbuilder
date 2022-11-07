@@ -68,7 +68,7 @@ function Tierbuilder() {
   return (
     <div className="h-full flex-col space-y-6 md:py-12">
       <div className="flex justify-center space-x-2">
-      <Button aria-label="Clear all rows" onClick={() => clearRows()}>
+        <Button aria-label="Clear all rows" onClick={() => clearRows()}>
           Clear All Rows
           <ClearAll {...btnIconProps} />
         </Button>

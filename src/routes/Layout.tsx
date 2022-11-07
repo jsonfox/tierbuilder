@@ -15,7 +15,7 @@ export default function Layout() {
   return (
     <div className="flex min-h-[100vh] select-none flex-col">
       <header className="flex flex-col items-center justify-between space-y-3 p-2 md:flex-row md:px-8 md:py-4">
-        <div className="flex w-full items-center justify-center space-x-2 font-title md:w-auto">
+        <div className="font-title flex w-full items-center justify-center space-x-2 md:w-auto">
           <img
             className="h-10 md:h-14"
             src="/logo.svg"
