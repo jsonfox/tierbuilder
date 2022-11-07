@@ -47,7 +47,7 @@ export default function Row({
         html={name}
         onChange={(e) => changeName(e.target.value)}
       />
-      <div className="flex-1 bg-neutral-800">
+      <div className="min-w-[80px] flex-1 bg-neutral-800">
         <ItemContainer id={rowIndex.toString()} items={items} />
       </div>
       <div className="flex w-20 items-center justify-evenly bg-black text-white">

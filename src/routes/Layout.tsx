@@ -13,19 +13,23 @@ export default function Layout() {
   };
 
   return (
-    <div className="select-none">
-      <header className="flex justify-between px-8 py-4">
-        <div className="flex items-center space-x-2 font-title">
-          <img className="h-14" src="/logo.svg" alt="Tierbuilder logo" />
+    <div className="flex min-h-[100vh] select-none flex-col">
+      <header className="flex flex-col items-center justify-between space-y-3 p-2 md:flex-row md:px-8 md:py-4">
+        <div className="flex w-full items-center justify-center space-x-2 font-title md:w-auto">
+          <img
+            className="h-10 md:h-14"
+            src="/logo.svg"
+            alt="Tierbuilder logo"
+          />
           <h1
-            className="mt-[-0.15em] text-center text-6xl"
+            className="mt-[-0.15em] text-center text-5xl md:text-6xl"
             aria-label="Tierbuilder"
           >
             BUILDER
           </h1>
         </div>
         <nav className="flex items-center">
-          <div className="space-x-4">
+          <div className="md:space-x-4">
             <NavButton onClick={() => navigate('/')}>
               Create New Template
             </NavButton>

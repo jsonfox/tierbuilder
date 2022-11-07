@@ -35,7 +35,7 @@ export const tierbuilder = (
       const [fromRow, toRow] = [
         source.droppableId,
         destination.droppableId
-      ].map((id) => (/default/i.test(id) ? 0 : parseInt(id) + 1));
+      ].map((id) => (/pool/i.test(id) ? 0 : parseInt(id) + 1));
       const fromIndex = source.index;
       let toIndex = destination.index;
 

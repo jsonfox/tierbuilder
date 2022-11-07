@@ -5,14 +5,15 @@ import { TbItem } from '../../utils/types';
 interface Props {
   id: string;
   items: TbItem[];
+  className?: string;
 }
 
-export default function ItemContainer({ id, items }: Props) {
+export default function ItemContainer({ id, items, className }: Props) {
   return (
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
         <div
-          className="flex flex-wrap overflow-hidden"
+          className={className ?? 'flex flex-wrap overflow-hidden'}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

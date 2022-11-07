@@ -1,9 +1,9 @@
 import { object, string, arrayOf } from 'checkeasy';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { AppDispatch } from '../redux/store';
 
 export type InputEvent = MouseEvent | TouchEvent | KeyboardEvent;
-export type UploadEvent = ChangeEvent | DragEvent;
+export type UploadEvent = React.ChangeEvent | DragEvent;
 export type StateAction = React.Dispatch<React.SetStateAction<any>>;
 export type DispatchAction = (...args: unknown[]) => AppDispatch;
 export type AnyFunction = (...args: unknown[]) => unknown;
@@ -22,23 +22,19 @@ export const initialState: StateProps = {
   rows: []
 };
 
+// Encoded url validators
+const itemValidator = object({
+  key: string(),
+  imageUrl: string()
+});
+
+const rowValidator = object({
+  name: string(),
+  color: string(),
+  items: arrayOf(itemValidator)
+});
+
 export const encodedValidator = object({
-  pool: arrayOf(
-    object({
-      key: string(),
-      imageUrl: string()
-    })
-  ),
-  rows: arrayOf(
-    object({
-      name: string(),
-      color: string(),
-      items: arrayOf(
-        object({
-          key: string(),
-          imageUrl: string()
-        })
-      )
-    })
-  )
+  pool: arrayOf(itemValidator),
+  rows: arrayOf(rowValidator)
 });

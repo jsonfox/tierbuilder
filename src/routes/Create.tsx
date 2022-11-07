@@ -104,14 +104,14 @@ export default function Create() {
           ))}
         </div>
       </div>
-      <div className="w-1/2 space-y-2">
+      <div className="space-y-2 md:w-1/2">
         <Label forId="images" text="Add Custom Images" />
         <form
           className="flex flex-col items-center space-y-6"
           onSubmit={handleFormSubmit}
         >
           <FileDrop
-            className="flex h-32 w-3/5 items-center justify-center rounded-lg bg-slate-100 text-xl leading-8 outline-dashed outline-slate-300"
+            className="flex h-32 w-96 items-center justify-center rounded-lg bg-slate-100 text-xl leading-8 outline-dashed outline-slate-300"
             draggingOverTargetClassName="bg-green-50 outline-green-400"
             onDrop={(files) => handleUpload(files)}
           >

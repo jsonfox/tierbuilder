@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import {
   base64urlToJson,
   jsonToBase64url,
+  nbsp,
   updateClipboard
 } from '../utils/helpers';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { DefaultArea, SaveModal, Row } from '../components/tierbuilder';
+import { Pool, SaveModal, Row } from '../components/tierbuilder';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createInitialState } from '../utils/helpers';
 import { initialState, TbRow, encodedValidator } from '../utils/types';
@@ -59,22 +60,25 @@ function Tierbuilder() {
     }
   }, [data, dispatch]);
 
+  const btnIconProps = {
+    side: 22,
+    className: 'hidden md:block'
+  };
+
   return (
-    <div className="flex-col space-y-6 py-12">
+    <div className="h-full flex-col space-y-6 md:py-12">
       <div className="flex justify-center space-x-2">
-        <Button aria-label="Copy as URL" onClick={() => copyToClipboard()}>
-          {copied
-            ? 'Copied\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'
-            : 'Copy As URL'}
-          {copied ? <Copied size={22} /> : <Copy size={22} />}
-        </Button>
-        <Button aria-label="Clear all rows" onClick={() => clearRows()}>
+      <Button aria-label="Clear all rows" onClick={() => clearRows()}>
           Clear All Rows
-          <ClearAll size={22} />
+          <ClearAll {...btnIconProps} />
+        </Button>
+        <Button aria-label="Copy as URL" onClick={() => copyToClipboard()}>
+          {copied ? 'Copied' + nbsp(9) : 'Copy As URL'}
+          {copied ? <Copied {...btnIconProps} /> : <Copy {...btnIconProps} />}
         </Button>
         <Button aria-label="Save image" onClick={() => setShowModal(true)}>
           Save Image
-          <Save size={22} />
+          <Save {...btnIconProps} />
         </Button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -91,7 +95,7 @@ function Tierbuilder() {
               />
             ))}
           </div>
-          <DefaultArea items={data.pool} />
+          <Pool items={data.pool} />
         </div>
       </DragDropContext>
 
