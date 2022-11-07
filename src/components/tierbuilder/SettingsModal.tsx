@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ColorResult, TwitterPicker } from 'react-color';
 import { useSelector, useDispatch } from '../../redux/hooks';
 import {
@@ -65,6 +65,7 @@ export default function SettingsModal({
 
   return (
     <Modal
+      role="modal"
       className={`${
         isClosing ? 'out ' : ''
       }relative mx-auto flex flex-col items-center space-y-4 rounded-sm bg-white pt-2 pb-10 text-center md:w-2/3 lg:w-1/2`}

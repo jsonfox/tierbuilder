@@ -1,6 +1,8 @@
+import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Item from './Item';
 import { TbItem } from '../../utils/types';
+import { joinClassNames } from '../../utils/helpers';
 
 interface Props {
   id: string;
@@ -13,7 +15,11 @@ export default function ItemContainer({ id, items, className }: Props) {
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
         <div
-          className={className ?? 'flex flex-wrap overflow-hidden'}
+          role="item-container"
+          className={joinClassNames(
+            'item-container',
+            className ?? 'flex flex-wrap overflow-hidden'
+          )}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

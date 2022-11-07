@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from '../../redux/hooks';
 import { MOVE_ROW, RENAME_ROW } from '../../redux/actions';
 import ContentEditable from 'react-contenteditable';
@@ -39,7 +39,7 @@ export default function Row({
   };
 
   return (
-    <div className="row flex outline outline-1 outline-black ">
+    <div role="row" className="flex outline outline-1 outline-black">
       <ContentEditable
         tagName="label"
         className="flex w-24 cursor-text items-center justify-center break-all border-r border-black p-1 text-center leading-4"

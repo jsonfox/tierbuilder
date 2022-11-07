@@ -1,16 +1,24 @@
-import { cleanup, render } from '@testing-library/react';
+import React, { FC, ReactNode, ReactElement } from 'react';
+import { cleanup, render, RenderOptions } from '@testing-library/react';
 import { afterEach } from 'vitest';
+import store, { ReduxProvider } from '../redux/store';
 
 afterEach(() => {
   cleanup();
 });
 
-const customRender = (ui: React.ReactElement, options = {}) =>
-  render(ui, {
-    // wrap provider(s) here if needed
-    wrapper: ({ children }) => children,
-    ...options
-  });
+const Providers: FC<{ children: ReactNode }> = ({
+  children
+}: {
+  children: ReactNode;
+}) => {
+  return <ReduxProvider store={store}>{children}</ReduxProvider>;
+};
+
+const customRender = (
+  ui: ReactElement,
+  options?: Omit<RenderOptions, 'wrapper'>
+) => render(ui, { wrapper: Providers, ...options });
 
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';

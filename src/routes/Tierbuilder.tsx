@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from '../redux/hooks';
 import { CLEAR_ALL_ROWS, MOVE_ITEM, SET_DATA } from '../redux/actions';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   base64urlToJson,
   jsonToBase64url,
@@ -61,7 +61,7 @@ function Tierbuilder() {
   }, [data, dispatch]);
 
   const btnIconProps = {
-    side: 22,
+    size: 22,
     className: 'hidden md:block'
   };
 

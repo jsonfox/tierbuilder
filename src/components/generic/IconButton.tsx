@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconBaseProps, IconType } from 'react-icons/lib';
 
 interface Props extends IconBaseProps {
@@ -23,6 +24,7 @@ export default function IconButton({
   return (
     <Icon
       {...props}
+      role="button"
       size={props.size || 20}
       className={[
         'cursor-pointer transition-all',

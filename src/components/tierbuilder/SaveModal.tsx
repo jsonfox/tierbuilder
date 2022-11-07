@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { Button } from '../generic';
 import { Close, Download, Success } from '../icons';
 import Canvas from './Canvas';
 import { StateAction, TbRow } from '../../utils/types';
-import { ButtonWithIcon } from '../generic';
-import { useState } from 'react';
 
 interface Props {
   rows: TbRow[];
@@ -41,8 +41,14 @@ export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
     }, 100);
   };
 
+  const btnIconProps = {
+    size: 22,
+    className: 'hidden md:block'
+  };
+
   return (
     <Modal
+      role="modal"
       className={`${
         isClosing ? 'out ' : ''
       }relative top-12 mx-auto flex max-w-fit flex-col items-center rounded-sm bg-white p-8`}
@@ -59,13 +65,14 @@ export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
         size={30}
         onClick={closeModal}
       />
-      <ButtonWithIcon
-        className="mb-4"
-        Icon={downloaded ? Success : Download}
-        onClick={() => downloadImage()}
-      >
+      <Button className="mb-4" onClick={() => downloadImage()}>
         Download Image
-      </ButtonWithIcon>
+        {downloaded ? (
+          <Success {...btnIconProps} />
+        ) : (
+          <Download {...btnIconProps} />
+        )}
+      </Button>
       <Canvas rows={rows} />
     </Modal>
   );

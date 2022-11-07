@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject } from 'react';
+import React, { Component, createRef, RefObject } from 'react';
 import { TbRow } from '../../utils/types';
 
 const pal = {

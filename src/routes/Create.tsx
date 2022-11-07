@@ -1,4 +1,4 @@
-import { FormEvent, useState, ChangeEvent } from 'react';
+import React, { FormEvent, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from '../redux/hooks';
 import { ROW_NAMES } from '../utils/constants';
