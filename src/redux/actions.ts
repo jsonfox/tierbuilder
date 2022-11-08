@@ -1,4 +1,3 @@
-export const RESET = 'RESET';
 export const SET_DATA = 'SET_DATA';
 export const MOVE_ITEM = 'MOVE_ITEM';
 export const ADD_ROW = 'ADD_ROW';

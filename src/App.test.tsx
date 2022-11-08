@@ -1,91 +1,73 @@
 import React from 'react';
-import {
-  getAllByRole,
-  getByRole,
-  render,
-  screen,
-  userEvent
-} from './utils/test-utils';
+import { render, screen, userEvent } from './utils/test-utils';
 import App from './App';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
-test('Full app rendering/navigation', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
+describe('Full app rendering/navigation', async () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+  });
 
-  expect(screen.getByText(/customize row labels/i)).toBeInTheDocument();
+  it('Should display the correct landing page', () => {
+    expect(screen.getByText(/customize row labels/i)).toBeInTheDocument();
+  });
 
-  await userEvent.click(screen.getByText(/use example template/i));
-  expect(location.pathname).toBe('/builder');
-  expect(screen.getByText(/copy as url/i)).toBeInTheDocument();
+  it('Should redirect to builder page after clicking corresponding nav button', async () => {
+    await userEvent.click(screen.getByText(/use example template/i));
 
-  await userEvent.click(screen.getByText(/create new template/i));
-  expect(location.pathname).toBe('/');
-  expect(screen.getByText(/\d+ images/i)).toBeInTheDocument();
+    expect(location.pathname).toBe('/builder');
+    expect(screen.getByText(/copy as url/i)).toBeInTheDocument();
+  });
+
+  it('Should redirect back to landing page after clicking corresponding nav button', async () => {
+    await userEvent.click(screen.getByText(/create new template/i));
+
+    expect(location.pathname).toBe('/');
+    expect(screen.getByText(/\d+ images/i)).toBeInTheDocument();
+  });
 });
 
-test('Invalid routes automatically redirect to homepage', async () => {
-  render(
-    <MemoryRouter initialEntries={['/notarealroute']}>
-      <App />
-    </MemoryRouter>
-  );
+describe('App handling invalid routes', () => {
+  it('Should redirect to landing page on invalid route', () => {
+    render(
+      <MemoryRouter initialEntries={['/notarealroute']}>
+        <App />
+      </MemoryRouter>
+    );
 
-  expect(screen.getByText(/add custom images/i)).toBeInTheDocument();
+    expect(screen.getByText(/add custom images/i)).toBeInTheDocument();
+  });
+
+  it('Should redirect to /builder on invalid /:encoded url', () => {
+    render(
+      <MemoryRouter initialEntries={['/builder/invalidencodedurl']}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/save image/i)).toBeInTheDocument();
+  });
 });
 
-test('Invalid encoded url automatically redirects to /builder', async () => {
-  render(
-    <MemoryRouter initialEntries={['/builder/invalidencodedurl']}>
-      <App />
-    </MemoryRouter>
-  );
+test('Tierbuilder page structure', () => {
+  it('Should contain the proper page elements for the Tierbuilder', async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
-  expect(screen.getByText(/save image/i)).toBeInTheDocument();
-});
+    await userEvent.click(screen.getByText(/use example template/i));
 
-test('Tierbuilder page structure', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
+    const [container] = document.getElementsByClassName('container');
+    if (!container) fail();
 
-  await userEvent.click(screen.getByText(/use example template/i));
-
-  const [container] = document.getElementsByClassName('container');
-  if (!container) fail();
-
-  expect(container.getElementsByTagName('button').length).toBe(3);
-  expect(screen.getAllByRole('row').length).toBe(5);
-  expect(screen.getAllByRole('item').length).toBe(15);
-});
-
-test('Tierbuilder interactions', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-
-  await userEvent.click(screen.getByText(/use example template/i));
-  const rows = screen.getAllByRole('row');
-  const pool = screen.getByRole('pool');
-  const items = getAllByRole(pool, 'button');
-
-  expect(
-    rows.every((r) => getByRole(r, 'item-container').childElementCount === 0)
-  ).toBe(true);
-
-  items[0].focus();
-  userEvent.keyboard('{Space}');
-  userEvent.keyboard('{ArrowUp}');
-  userEvent.keyboard('{Space}');
-
-  expect(
-    screen.getAllByRole('item-container').some((e) => e.childElementCount === 1)
-  ).toBe(true);
+    expect(container.getElementsByTagName('button').length).toBe(3);
+    expect(screen.getAllByRole('row').length).toBe(5);
+    expect(screen.getAllByRole('item').length).toBe(15);
+  });
 });

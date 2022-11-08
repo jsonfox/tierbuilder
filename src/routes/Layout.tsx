@@ -1,6 +1,6 @@
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from '../redux/hooks';
-import { RESET } from '../redux/actions';
+import { SET_DATA } from '../redux/actions';
 import React, { ButtonHTMLAttributes } from 'react';
 
 export default function Layout() {
@@ -8,7 +8,7 @@ export default function Layout() {
   const dispatch = useDispatch();
 
   const loadExample = () => {
-    dispatch({ type: RESET });
+    dispatch({ type: SET_DATA });
     navigate('/builder');
   };
 

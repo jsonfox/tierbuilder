@@ -7,26 +7,28 @@ import {
   MOVE_ROW,
   REMOVE_ROW,
   RENAME_ROW,
-  RESET,
   SET_DATA
 } from './actions';
-import { insert, reorder, copyState, tail } from '../utils/helpers';
+import {
+  insert,
+  reorder,
+  copyState,
+  tail,
+  createInitialState
+} from '../utils/helpers';
 import { StateProps, initialState } from '../utils/types';
 import { AnyAction } from 'redux';
 
 export const tierbuilder = (
   state: StateProps = initialState,
   action: AnyAction
-) => {
-  if (!action) return;
+): StateProps => {
   state = copyState(state);
 
   switch (action.type) {
-    case RESET:
-      return initialState;
-
-    case SET_DATA:
-      return action.data;
+    case SET_DATA: {
+      return action.data ?? createInitialState();
+    }
 
     case MOVE_ITEM: {
       const { dropInfo } = action;
@@ -56,8 +58,8 @@ export const tierbuilder = (
     case ADD_ROW: {
       const { rowIndex, direction } = action;
       const newRow = { name: 'NEW', color: '#FFFF7F', items: [] };
-      const insertIndex = direction === 'above' ? rowIndex : rowIndex + 1;
-      console.log(state.rows, insert(state.rows, insertIndex, newRow));
+      const insertIndex = rowIndex + +/below/i.test(direction);
+
       return {
         ...state,
         rows: insert(state.rows, insertIndex, newRow)
@@ -66,29 +68,35 @@ export const tierbuilder = (
 
     case MOVE_ROW: {
       const { rowIndex, direction } = action;
+      const isUp = /up/i.test(direction);
+
       if (
-        (rowIndex < 1 && direction === 'up') ||
-        (rowIndex === state.rows.length - 1 && direction === 'down')
+        (rowIndex < 1 && isUp) ||
+        (rowIndex === state.rows.length - 1 && !isUp)
       )
-        return;
-      const newRowIndex = rowIndex + (direction === 'up' ? 0 : 1);
+        return state;
+      const newRowIndex = rowIndex + +!isUp;
       return {
         ...state,
         rows: reorder(state.rows, rowIndex, newRowIndex)
       };
     }
 
-    case REMOVE_ROW:
+    case REMOVE_ROW: {
+      if (state.rows.length === 1) return state;
+      const { rowIndex } = action;
+
+      state.pool.push(...state.rows[rowIndex].items);
+      state.rows.splice(rowIndex, 1);
+      return state;
+    }
+
     case CLEAR_ROW: {
       const { rowIndex } = action;
+      if (!state.rows[rowIndex].items.length) return state;
+
       state.pool.push(...state.rows[rowIndex].items);
-
-      if (action.type === CLEAR_ROW) {
-        state.rows[rowIndex].items = [];
-      } else {
-        state.rows.splice(rowIndex, 1);
-      }
-
+      state.rows[rowIndex].items = [];
       return state;
     }
 

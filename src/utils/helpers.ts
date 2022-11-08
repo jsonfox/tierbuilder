@@ -69,8 +69,8 @@ export const createInitialState = (
 
 // Join multiple class name strinngs
 export const joinClassNames = (...args: Array<string | undefined>) =>
-  args.filter((c) => c).join(' ');
+  args.filter((c) => c).join(' ') || '';
 
 // Non-breaking space character generator
 export const nbsp = (len = 1) =>
-  Array.from(Array(len), () => '\u00A0').join('');
+  Array.from(Array(len < 0 ? 0 : len), () => '\u00A0').join('') || '';
