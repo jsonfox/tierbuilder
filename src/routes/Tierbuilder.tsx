@@ -24,6 +24,7 @@ function Tierbuilder() {
   const data = useSelector((state) => state).tierbuilder ?? initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
+    console.log('hi');
     const { source, destination } = dropInfo;
     if (
       !destination ||

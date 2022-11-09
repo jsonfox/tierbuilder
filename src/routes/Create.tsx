@@ -8,6 +8,7 @@ import { Spinner, Trash } from '../components/icons';
 import { FileDrop } from 'react-file-drop';
 import { Button } from '../components/generic';
 import ImageKit from 'imagekit';
+import { validFileExtensions } from '../utils/types';
 
 const imagekit = new ImageKit({
   publicKey: 'public_gwKcX/++rPU4fc4RB/QMIYmJyq8=',
@@ -19,7 +20,7 @@ export default function Create() {
   const [rowNames, setRowNames] = useState(ROW_NAMES);
   const [files, setFiles] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,11 +33,23 @@ export default function Create() {
   const handleUpload = (fileList: FileList | null) => {
     if (!fileList?.length) return;
 
+    setError('');
+    const failedUpload = (rej: (reason?: any) => void, err: Error | null) => {
+      err ??= new Error();
+      setError(
+        'There was an error reading your files, make sure they are all images with an extension of .png, .jpg, or .jpeg'
+      );
+      rej(err);
+      console.error(err);
+    };
+
     const readFile = (file: File) =>
       new Promise((res, rej) => {
+        if (!validFileExtensions.test(file.type))
+          failedUpload(rej, new TypeError('Invalid file extension'));
         const reader = new FileReader();
         reader.onload = () => res(reader.result as string);
-        reader.onerror = () => rej(reader.error);
+        reader.onerror = () => failedUpload(rej, reader.error);
         reader.readAsDataURL(file);
       });
 
@@ -52,7 +65,7 @@ export default function Create() {
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(false);
+    setError('');
     setUploading(true);
 
     const res = await Promise.all(
@@ -66,7 +79,9 @@ export default function Create() {
 
     if (!res.every((r) => r.fileId)) {
       setUploading(false);
-      setError(true);
+      setError(
+        'There was an error uploading one or more of your images, please try again.'
+      );
       return;
     }
 
@@ -130,7 +145,10 @@ export default function Create() {
             type="file"
             id="files"
             multiple={true}
-            onChange={(e) => handleUpload(e.target.files)}
+            onChange={(e) => {
+              e.preventDefault();
+              handleUpload(e.target.files);
+            }}
           />
           <div className="max-w-[592px] leading-5">
             <p className="text-2xl">{files.length} Images</p>
@@ -140,6 +158,7 @@ export default function Create() {
             <div className="flex flex-wrap">
               {files.map((uri, i) => (
                 <div
+                  role="file"
                   className="group ml-1 mt-1 flex h-20 w-20 items-center justify-center rounded-sm bg-cover hover:scale-105"
                   style={{ backgroundImage: `url(${uri})` }}
                   key={i}
@@ -153,12 +172,7 @@ export default function Create() {
               ))}
             </div>
           </div>
-          {error && (
-            <span className="text-red-500">
-              There was an error uploading one or more of your images, please
-              try again.
-            </span>
-          )}
+          {error && <span className="text-red-500">{error}</span>}
           <Button
             className="w-1/5 text-xl"
             isInput

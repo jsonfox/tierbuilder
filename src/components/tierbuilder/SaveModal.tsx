@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-import { Button } from '../generic';
+import { Button, Modal } from '../generic';
 import { Close, Download, Success } from '../icons';
 import Canvas from './Canvas';
 import { StateAction, TbRow } from '../../utils/types';
@@ -48,17 +47,8 @@ export default function SaveModal({ rows, isOpen, setIsOpen }: Props) {
 
   return (
     <Modal
-      role="modal"
-      className={`${
-        isClosing ? 'out ' : ''
-      }relative top-12 mx-auto flex max-w-fit flex-col items-center rounded-sm bg-white p-8`}
-      isOpen={isOpen}
-      style={{
-        overlay: {
-          backgroundColor: '#00000066'
-        }
-      }}
-      onRequestClose={closeModal}
+      className="relative top-12 mx-auto flex max-w-fit flex-col items-center rounded-sm bg-white p-8"
+      {...{ isOpen, isClosing, closeModal }}
     >
       <Close
         className="absolute top-0 right-0 mr-1 cursor-pointer opacity-30 hover:scale-110 hover:opacity-60"

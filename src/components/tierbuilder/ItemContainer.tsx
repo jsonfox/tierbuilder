@@ -8,9 +8,10 @@ interface Props {
   id: string;
   items: TbItem[];
   className?: string;
+  testId?: string;
 }
 
-export default function ItemContainer({ id, items, className }: Props) {
+export default function ItemContainer({ id, items, className, testId }: Props) {
   return (
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
@@ -20,6 +21,7 @@ export default function ItemContainer({ id, items, className }: Props) {
             'item-container',
             className ?? 'flex flex-wrap overflow-hidden'
           )}
+          data-testid={testId}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

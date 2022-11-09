@@ -7,11 +7,10 @@ import {
   CLEAR_ROW,
   REMOVE_ROW
 } from '../../redux/actions';
-import Modal from 'react-modal';
 import { COLORS } from '../../utils/constants';
 import { initialState, StateAction } from '../../utils/types';
 import { Close } from '../icons';
-import { Button } from '../generic';
+import { Button, Modal } from '../generic';
 
 interface Props {
   isOpen: boolean;
@@ -65,17 +64,8 @@ export default function SettingsModal({
 
   return (
     <Modal
-      role="modal"
-      className={`${
-        isClosing ? 'out ' : ''
-      }relative mx-auto flex flex-col items-center space-y-4 rounded-sm bg-white pt-2 pb-10 text-center md:w-2/3 lg:w-1/2`}
-      isOpen={isOpen}
-      style={{
-        overlay: {
-          backgroundColor: '#00000066'
-        }
-      }}
-      onRequestClose={closeModal}
+      className="relative mx-auto flex flex-col items-center space-y-4 rounded-sm bg-white pt-2 pb-10 text-center md:w-2/3 lg:w-1/2"
+      {...{ isOpen, isClosing, closeModal }}
     >
       <Close
         className="absolute top-0 right-0 mr-1 cursor-pointer opacity-30 hover:scale-110 hover:opacity-60"
