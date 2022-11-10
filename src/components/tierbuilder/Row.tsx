@@ -39,13 +39,18 @@ export default function Row({
   };
 
   return (
-    <div role="row" className="flex outline outline-1 outline-black">
+    <div
+      role="row"
+      className="row flex outline outline-1 outline-black"
+      data-testid="row"
+    >
       <ContentEditable
         tagName="label"
         className="flex w-24 cursor-text items-center justify-center break-all border-r border-black p-1 text-center leading-4"
         style={{ backgroundColor: color, minHeight: '80px', minWidth: '96px' }}
         html={name}
         onChange={(e) => changeName(e.target.value)}
+        data-testid="label"
       />
       <div className="min-w-[80px] flex-1 bg-neutral-800">
         <ItemContainer id={rowIndex.toString()} items={items} />

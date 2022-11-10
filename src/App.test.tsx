@@ -3,7 +3,6 @@ import { render, screen, userEvent } from './utils/test-utils';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { IMAGE_LIST } from './utils/constants';
 import App from './App';
-import { getElementsByTagName } from 'domutils';
 
 describe('Full app rendering/navigation', async () => {
   beforeEach(() => {
@@ -115,6 +114,7 @@ describe('Tierbuilder page', () => {
   });
 
   it('Contains the proper page elements for the Tierbuilder', async () => {
+    const [label] = screen.getAllByTestId('row');
     const [container] = document.getElementsByClassName('container');
     expect(container).not.toBeNull();
     if (!container) return;
@@ -122,29 +122,8 @@ describe('Tierbuilder page', () => {
     expect(container.getElementsByTagName('button')).toHaveLength(3);
     expect(screen.getAllByRole('row')).toHaveLength(5);
     expect(screen.getAllByTestId('item')).toHaveLength(15);
-  });
 
-  it('Reorders elements on drag & drop', async () => {
-    const container = screen.getByTestId('pool');
-    expect(container).not.toBeNull();
-    if (!container) return;
-
-    const initialOrder = container.children;
-    expect(container.children).toStrictEqual(initialOrder);
-
-    const items = screen.getAllByTestId('item');
-    const item = items[0].closest('[data-rbd-draggable-id]');
-
-    console.log(item);
-    // (item as HTMLElement).focus();
-    // await userEvent.keyboard('{space}');
-    // expect(
-    //   await screen.findByText(/You have lifted an item/i)
-    // ).toBeInTheDocument();
-    // await userEvent.keyboard('{arrowright}');
-    // await userEvent.keyboard('{space}');
-
-    // expect(container.children).not.toStrictEqual(initialOrder);
+    expect(label.textContent).toBe('S');
   });
 
   it('Opens a modal with a rendered image of the Tierbuilder', async () => {
@@ -153,7 +132,43 @@ describe('Tierbuilder page', () => {
       .closest('button') as HTMLButtonElement;
 
     await userEvent.click(btn);
+    const canvas = document.querySelector('canvas');
     expect(screen.getByText(/download/i)).toBeInTheDocument();
-    expect(document.querySelector('canvas')).not.toBeNull();
+    expect(canvas).not.toBeNull();
+  });
+
+  describe('Row customization modal', async () => {
+    let row, btn;
+
+    beforeEach(async () => {
+      [row] = screen.getAllByTestId('row');
+      [btn] = row.getElementsByTagName('svg');
+
+      await userEvent.click(btn);
+      expect(screen.getByText(/edit label text/i)).toBeInTheDocument();
+    });
+
+    it('Changes the label color', async () => {
+      const picker = document.querySelector('.picker') as HTMLElement;
+      const color = (
+        Array.from(picker.getElementsByTagName('span')).at(-1) as HTMLElement
+      ).firstChild as HTMLElement;
+      const initial = color.title;
+      const [input] = document.getElementsByTagName('input');
+
+      await userEvent.dblClick(input);
+      await userEvent.keyboard('FFFFFF');
+
+      expect(color.title).not.toEqual(initial);
+    });
+
+    it('Changes the label text', async () => {
+      const [input] = document.getElementsByTagName('textarea');
+
+      await userEvent.dblClick(input);
+      await userEvent.keyboard('Row');
+
+      expect(input).toHaveValue('Row');
+    });
   });
 });
