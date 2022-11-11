@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Item from './Item';
 import { TbItem } from '../../utils/types';
-import { joinClassNames } from '../../utils/helpers';
+import { classNames } from '../../utils/helpers';
 
 interface Props {
   id: string;
@@ -17,7 +17,7 @@ export default function ItemContainer({ id, items, className, testId }: Props) {
       {(provided) => (
         <div
           role="item-container"
-          className={joinClassNames(
+          className={classNames(
             'item-container',
             className ?? 'flex flex-wrap overflow-hidden'
           )}

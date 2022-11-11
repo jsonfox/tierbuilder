@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, userEvent } from './utils/test-utils';
+import { render, screen, userEvent } from './test/test-utils';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { IMAGE_LIST } from './utils/constants';
 import App from './App';

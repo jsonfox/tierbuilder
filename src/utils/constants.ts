@@ -1,11 +1,8 @@
-const getImageUrl = (i: number) =>
-  new URL(
-    `../assets/images/test${i < 10 ? '0' + i : i.toString()}.png`,
-    import.meta.url
-  ).href;
-
 // List of default images for debugging
-export const IMAGE_LIST = Array.from(Array(15), (v, i) => getImageUrl(i + 1));
+export const IMAGE_LIST = Array.from(
+  Array(15),
+  (v, i) => new URL(`../assets/images/test${i}.png`, import.meta.url).href
+);
 
 // Default row names
 export const ROW_NAMES = ['S', 'A', 'B', 'C', 'D'];

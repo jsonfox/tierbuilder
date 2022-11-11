@@ -59,21 +59,19 @@ export default function Row({
         <IconButton
           Icon={Settings}
           size={30}
-          hoverClassNames="opacity-80 rotate-[60deg]"
+          hoverClass="rotate-[60deg]"
           onClick={() => setShowSettings(true)}
         />
         <div className="flex flex-col space-y-2">
           <IconButton
             Icon={MoveUp}
-            hoverClassNames="opacity-80 translate-y-[1px]"
-            activeClassNames="translate-y-[-1px]"
+            hoverClass="-translate-y-px"
             onClick={() => moveRow('up')}
             aria-disabled={!(rowIndex > 0)}
           />
           <IconButton
             Icon={MoveDown}
-            hoverClassNames="opacity-80 translate-y-[-1px]"
-            activeClassNames="translate-y-[1px]"
+            hoverClass="translate-y-px"
             onClick={() => moveRow('down')}
             aria-disabled={!(rowIndex < totalRows - 1)}
           />

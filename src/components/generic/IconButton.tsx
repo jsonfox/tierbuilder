@@ -1,39 +1,31 @@
 import React from 'react';
 import { IconBaseProps, IconType } from 'react-icons/lib';
+import { classNames, addSelectors } from '../../utils/helpers';
 
 interface Props extends IconBaseProps {
   Icon: IconType;
-  hoverClassNames?: string;
-  activeClassNames?: string;
+  hoverClass?: string;
+  activeClass?: string;
 }
 
 export default function IconButton({
   Icon,
-  hoverClassNames = '',
-  activeClassNames = '',
+  size,
+  className,
+  hoverClass,
+  activeClass,
   ...props
 }: Props) {
-  const addSelectors = (classes: string, selector: string) => {
-    if (!classes) return '';
-    return classes
-      .split(' ')
-      .map((c) => `${selector}:${c}`)
-      .join(' ');
-  };
-
   return (
     <Icon
-      {...props}
       role="button"
-      size={props.size || 20}
-      className={[
+      size={size ?? 20}
+      className={classNames(
         'cursor-pointer transition-all',
-        props.className ?? '',
-        addSelectors(hoverClassNames ?? '', 'hover'),
-        addSelectors(activeClassNames ?? '', 'active')
-      ]
-        .filter((c) => c)
-        .join(' ')}
+        className,
+        addSelectors({ hover: hoverClass, active: activeClass })
+      )}
+      {...props}
     />
   );
 }

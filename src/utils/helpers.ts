@@ -68,8 +68,37 @@ export const createInitialState = (
 };
 
 // Join multiple class name strinngs
-export const joinClassNames = (...args: Array<string | undefined>) =>
-  args.filter((c) => c).join(' ') || '';
+export const classNames = (
+  ...args: Array<string | string[] | object | undefined>
+) => {
+  const join = (arr: Array<string | undefined>) =>
+    arr.filter((c) => c).join(' ') ?? '';
+
+  const names = args.map((e) => {
+    if (Array.isArray(e)) {
+      return join(e);
+    } else if (typeof e === 'object') {
+      return Object.entries(e)
+        .filter(([, v]) => v === true)
+        .map(([k]) => k)
+        .join(' ');
+    } else {
+      return e;
+    }
+  });
+
+  return join(names);
+};
+
+// Add Tailwind selectors to class name strings
+export const addSelectors = (toAdd: object) =>
+  Object.entries(toAdd).map(
+    ([selector, classes]) =>
+      (classes as string)
+        ?.split(' ')
+        .map((c) => `${selector}:${c}`)
+        .join(' ') ?? ''
+  );
 
 // Non-breaking space character generator
 export const nbsp = (len = 1) =>

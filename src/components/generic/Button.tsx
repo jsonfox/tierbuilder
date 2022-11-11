@@ -1,5 +1,5 @@
 import React, { Children, ButtonHTMLAttributes } from 'react';
-import { joinClassNames } from '../../utils/helpers';
+import { classNames } from '../../utils/helpers';
 
 interface Props extends ButtonHTMLAttributes<unknown> {
   isInput?: boolean;
@@ -16,10 +16,10 @@ export default function Button({ className, isInput, ...props }: Props) {
   return isInput ? (
     <input
       role="button"
-      className={joinClassNames(baseStyles, className)}
+      className={classNames(baseStyles, className)}
       {...props}
     />
   ) : (
-    <button className={joinClassNames(baseStyles, className)} {...props} />
+    <button className={classNames(baseStyles, className)} {...props} />
   );
 }

@@ -1,7 +1,7 @@
+import React, { ButtonHTMLAttributes } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useDispatch } from '../redux/hooks';
 import { SET_DATA } from '../redux/actions';
-import React, { ButtonHTMLAttributes } from 'react';
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Layout() {
         <div className="flex w-full items-center justify-center space-x-2 font-title md:w-auto">
           <img
             className="h-10 md:h-14"
-            src="/logo.svg"
+            src={new URL('../assets/images/logo.svg', import.meta.url).href}
             alt="Tierbuilder logo"
           />
           <h1

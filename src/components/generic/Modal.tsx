@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import { joinClassNames } from '../../utils/helpers';
+import { classNames } from '../../utils/helpers';
 import { Children } from '../../utils/types';
 
 interface Props {
@@ -21,7 +21,7 @@ export default function Modal({
     <ReactModal
       role="modal"
       appElement={document.querySelector('#root') as HTMLElement}
-      className={joinClassNames(isClosing ? 'out' : '', className)}
+      className={classNames(className, { out: isClosing })}
       onRequestClose={closeModal}
       style={{
         overlay: {
