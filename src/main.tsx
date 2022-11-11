@@ -6,7 +6,7 @@ import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ReduxProvider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/tierbuilder">
       <App />
     </BrowserRouter>
   </ReduxProvider>
