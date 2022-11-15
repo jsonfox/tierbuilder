@@ -4,7 +4,7 @@
   # Tierbuilder
   Tiermaker clone built in React
   
-  ![build](https://github.com/jthefox/tierbuilder/actions/workflows/build.yml/badge.svg)
+  ![build](https://github.com/jsonfox/tierbuilder/actions/workflows/build.yml/badge.svg)
   
   ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge)
   ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge)
@@ -13,7 +13,7 @@
 
   ![Example usage of Tierbuilder](./assets/tierbuilder.gif)
 
-  [Try it out here](https://jthefox.github.io/tierbuilder/)
+  [Try it out here](https://jsonfox.github.io/tierbuilder/)
 </div>
 
 ## Table of Contents
