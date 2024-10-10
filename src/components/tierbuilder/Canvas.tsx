@@ -53,7 +53,7 @@ export default class Canvas extends Component<Props, State> {
     const ctx = canvas?.getContext('2d');
     if (!ctx) return;
 
-    console.log('Rendering tierbuilder as image');
+    console.info('Rendering tierbuilder as image');
 
     const cur = { x: 0, y: 0 };
 
@@ -69,6 +69,7 @@ export default class Canvas extends Component<Props, State> {
         ctx.drawImage(img, x, y, pal.item.w, pal.item.h);
         img.remove();
       };
+      img.setAttribute('crossorigin', 'anonymous');
     };
 
     const paintLabel = (text: string, x: number, y: number) => {

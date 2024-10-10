@@ -24,7 +24,6 @@ function Tierbuilder() {
   const data = useSelector((state) => state).tierbuilder ?? initialState;
 
   const onDragEnd = (dropInfo: DropResult) => {
-    console.log('hi');
     const { source, destination } = dropInfo;
     if (
       !destination ||
@@ -123,7 +122,7 @@ function Wrapper() {
         encodedValidator(data, 'encoded');
         dispatch({ type: SET_DATA, data });
       } catch {
-        console.log('URL was not valid');
+        console.error('URL was not valid');
         navigate('/builder');
       }
     }
